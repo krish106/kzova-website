@@ -1,17 +1,35 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
+const { MongoClient } = require('mongodb');
 
 const app = express();
-const port = 3000;
-const DATA_FILE = path.join(__dirname, 'data.json');
-const REVIEWS_FILE = path.join(__dirname, 'reviews.json');
-const ADMIN_PASSWORD = 'admin123';
+// Use process.env.PORT for Render deployment
+const port = process.env.PORT || 3000;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+
+const uri = process.env.MONGODB_URI;
+let client;
+let db;
+
+async function connectDB() {
+  if (!uri) {
+    console.warn('⚠️ MONGODB_URI is not set. Database features will fail.');
+    return null;
+  }
+  if (!client) {
+    client = new MongoClient(uri);
+    await client.connect();
+    db = client.db('kzova');
+    console.log('✅ Connected to MongoDB');
+  }
+  return db;
+}
+connectDB().catch(console.error);
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.json({ limit: '5mb' }));
@@ -26,19 +44,21 @@ app.use(session({
 app.use(express.static(__dirname));
 
 // ── Public API: Get data ──
-app.get('/api/data', (req, res) => {
-  fs.readFile(DATA_FILE, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Failed to read data' });
+app.get('/api/data', async (req, res) => {
+  try {
+    const database = await connectDB();
+    if (!database) return res.status(500).json({ error: 'No database connection' });
+    
+    const dataDoc = await database.collection('siteData').findOne({ _id: 'kzova_data' });
+    if (dataDoc && dataDoc.data) {
+      res.json(dataDoc.data);
+    } else {
+      res.json({});
     }
-    try {
-      res.json(JSON.parse(data));
-    } catch (parseErr) {
-      console.error(parseErr);
-      res.status(500).json({ error: 'Failed to parse data' });
-    }
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to read data from MongoDB' });
+  }
 });
 
 // ── Auth: Login ──
@@ -69,7 +89,6 @@ function requireAuth(req, res, next) {
   if (req.session.authenticated) {
     return next();
   }
-  // Fallback: also accept password in body for backward compat
   if (req.body && req.body.password === ADMIN_PASSWORD) {
     req.session.authenticated = true;
     return next();
@@ -78,20 +97,26 @@ function requireAuth(req, res, next) {
 }
 
 // ── Protected API: Save data ──
-app.post('/api/data', requireAuth, (req, res) => {
+app.post('/api/data', requireAuth, async (req, res) => {
   const data = req.body.data || req.body;
+  try {
+    const database = await connectDB();
+    if (!database) return res.status(500).json({ error: 'No database connection' });
 
-  fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Failed to save data' });
-    }
+    await database.collection('siteData').updateOne(
+      { _id: 'kzova_data' },
+      { $set: { data: data } },
+      { upsert: true }
+    );
     res.json({ success: true });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to save data to MongoDB' });
+  }
 });
 
 // ── Public API: Submit review ──
-app.post('/api/reviews', (req, res) => {
+app.post('/api/reviews', async (req, res) => {
   const { name, email, rating, review } = req.body;
   if (!name || !review) {
     return res.status(400).json({ error: 'Name and review are required' });
@@ -106,68 +131,61 @@ app.post('/api/reviews', (req, res) => {
     date: new Date().toISOString()
   };
 
-  fs.readFile(REVIEWS_FILE, 'utf8', (err, data) => {
-    let reviews = [];
-    if (!err && data) {
-      try { reviews = JSON.parse(data); } catch (e) {}
-    }
-    reviews.push(newReview);
+  try {
+    const database = await connectDB();
+    if (!database) return res.status(500).json({ error: 'No database connection' });
+
+    await database.collection('reviews').insertOne(newReview);
     
-    fs.writeFile(REVIEWS_FILE, JSON.stringify(reviews, null, 2), (writeErr) => {
-      if (writeErr) {
-        console.error(writeErr);
-        return res.status(500).json({ error: 'Failed to save review' });
+    // Email Notification
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'arionvpn1@gmail.com',
+        pass: process.env.EMAIL_PASS
       }
-      
-      // Email Notification
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'arionvpn1@gmail.com',
-          pass: process.env.EMAIL_PASS
+    });
+
+    const mailOptions = {
+      from: '"Kzova Reviews" <arionvpn1@gmail.com>',
+      to: 'arionvpn1@gmail.com',
+      subject: `New Review from ${name} (${newReview.rating} Stars)`,
+      text: `You have received a new review!\n\nName: ${name}\nEmail: ${newReview.email || 'N/A'}\nRating: ${newReview.rating}/5\n\nReview:\n${newReview.review}\n\nDate: ${newReview.date}`
+    };
+
+    if (process.env.EMAIL_PASS) {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Review email sent:', info.response);
         }
       });
+    } else {
+      console.warn('Warning: EMAIL_PASS environment variable is not set. Email notification skipped.');
+    }
 
-      const mailOptions = {
-        from: '"Kzova Reviews" <arionvpn1@gmail.com>',
-        to: 'arionvpn1@gmail.com',
-        subject: `New Review from ${name} (${newReview.rating} Stars)`,
-        text: `You have received a new review!\n\nName: ${name}\nEmail: ${newReview.email || 'N/A'}\nRating: ${newReview.rating}/5\n\nReview:\n${newReview.review}\n\nDate: ${newReview.date}`
-      };
-
-      if (process.env.EMAIL_PASS) {
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error('Error sending email:', error);
-          } else {
-            console.log('Review email sent:', info.response);
-          }
-        });
-      } else {
-        console.warn('Warning: EMAIL_PASS environment variable is not set. Email notification skipped.');
-      }
-
-      res.json({ success: true, review: newReview });
-    });
-  });
+    res.json({ success: true, review: newReview });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to save review to MongoDB' });
+  }
 });
 
 // ── Protected API: Get reviews ──
-app.get('/api/reviews', requireAuth, (req, res) => {
-  fs.readFile(REVIEWS_FILE, 'utf8', (err, data) => {
-    if (err) {
-      // If file doesn't exist yet, just return empty array
-      return res.json([]);
-    }
-    try {
-      res.json(JSON.parse(data));
-    } catch (parseErr) {
-      res.status(500).json({ error: 'Failed to parse reviews' });
-    }
-  });
+app.get('/api/reviews', requireAuth, async (req, res) => {
+  try {
+    const database = await connectDB();
+    if (!database) return res.status(500).json({ error: 'No database connection' });
+
+    const reviews = await database.collection('reviews').find({}).toArray();
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch reviews from MongoDB' });
+  }
 });
 
 app.listen(port, () => {
-  console.log(`\n  🚀 Kzova Labs Server running at http://localhost:${port}`);
-  console.log(`  📋 Admin panel at http://localhost:${port}/admin.html\n`);
+  console.log(`\n  🚀 Kzova Labs Server running on port ${port}`);
 });
