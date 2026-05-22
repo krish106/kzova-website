@@ -27,7 +27,7 @@
   <script>
     async function loadLegalData() {
       try {
-        const res = await fetch('/api/data');
+        const res = await fetch('data.json');
         if (!res.ok) throw new Error('Failed to load API data');
         const data = await res.json();
         
