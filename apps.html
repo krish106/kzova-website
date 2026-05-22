@@ -378,92 +378,71 @@ body:hover .cursor-ring { }
   <a href="contact.html">Reviews</a>
 </div>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="float-card fc-1">
-    <div class="fc-icon" style="background:rgba(14,165,233,.15)">💻</div>
-    <div class="fc-label"><strong>Windows Apps</strong><span>Native Windows Experiences</span></div>
-  </div>
-  <div class="float-card fc-2">
-    <div class="fc-icon" style="background:rgba(16,185,129,.15)">📱</div>
-    <div class="fc-label"><strong>Cross-Platform</strong><span>Any Device, Anywhere</span></div>
-  </div>
-  <div class="float-card fc-3">
-    <div class="fc-icon" style="background:rgba(0,230,118,.15)">⚡</div>
-    <div class="fc-label"><strong>High Performance</strong><span>Optimized & Fast</span></div>
-  </div>
-  <div class="float-card fc-4">
-    <div class="fc-icon" style="background:rgba(255,107,157,.15)">✨</div>
-    <div class="fc-label"><strong>Beautiful UI</strong><span>Pixel-Perfect Design</span></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-tag" id="dynamic-hero-tag">
-      <span class="pulse-dot"></span>
-      Independent Developer Studio
+<!-- ARION VPN PRODUCT -->
+<section id="product" class="section">
+  <div class="product-wrap">
+    <div class="product-hero">
+      <div class="product-visual reveal-zoom">
+        <div class="shield-ring"></div>
+        <div class="shield-ring"></div>
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img src="logo1.png" class="shield-icon" style="width:70px;height:70px;object-fit:contain" alt="VPN App Logo">
+            <div class="vpn-status">● Active</div>
+            <div class="vpn-ip">Arion VPN is running</div>
+          </div>
+          <div class="phone-bar"></div>
+        </div>
+      </div>
+      <div class="product-info reveal-left">
+        <div class="product-badge" id="dynamic-product-badge">🟢 Available Now</div>
+        <h2 id="dynamic-product-h2">Arion <span>VPN</span></h2>
+        <p id="dynamic-product-desc">A flagship application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.</p>
+        <p id="dynamic-product-platforms" style="color:var(--muted);font-size:14px;margin-bottom:24px">Windows • Android</p>
+        <div class="download-btns">
+          <a href="#" class="dl-btn android" id="dynamic-dl-android">
+            <span class="dl-icon">🤖</span>
+            <span class="dl-text"><small>Download for</small><strong>Android</strong></span>
+          </a>
+          <a href="#" class="dl-btn windows" id="dynamic-dl-windows">
+            <span class="dl-icon">🖥️</span>
+            <span class="dl-text"><small>Download for</small><strong>Windows</strong></span>
+          </a>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:18px;font-size:13px;color:var(--muted);">
+          <a href="privacy.html" id="dynamic-privacy-link" style="color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:all 0.3s;cursor:pointer;">Privacy Policy</a>
+          <a href="terms.html" id="dynamic-terms-link" style="color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:all 0.3s;cursor:pointer;">Terms & Conditions</a>
+        </div>
+      </div>
     </div>
-    <h1 class="hero-h1">
-      <span class="word-white" id="dynamic-hero-h1-white">Crafting Beautiful</span>
-      <span class="word-gradient" id="dynamic-hero-h1-grad">Digital Experiences.</span>
-    </h1>
-    <p class="hero-p" id="dynamic-hero-p">
-      Hi, we are Kzova Labs. We build intuitive, high-performance software for Windows and cross-platform environments. Let's make something amazing together.
-    </p>
-    <div class="hero-btns">
-      <a href="#product" class="btn-grad">View My Apps →</a>
-      <a href="#about" class="btn-outline">About Me</a>
+
+    <!-- Features -->
+    <div class="section-center section-header reveal-blur">
+      <div class="section-tag">Capabilities</div>
+      <h2 class="section-h">Built for <span>Excellence</span></h2>
+      <p class="section-p">Features designed to empower users and streamline their daily workflow.</p>
+    </div>
+    <div class="features-grid" id="dynamic-features-grid">
+      <!-- Populated dynamically from API -->
     </div>
   </div>
 </section>
 
-<!-- STATS BELT -->
-<div id="stats-belt" class="glow-divider" style="display:none">
-  <div class="stats-grid" id="dynamic-stats-grid"></div>
-</div>
 
-<!-- ABOUT -->
-<section id="about" class="section">
-  <div class="about-wrap">
-    <div class="about-visual-wrap reveal-right">
-      <div class="about-3d-card">
-        <div class="about-3d-inner">
-          <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:12px">
-            <img src="klogo.png" class="about-logo-img" alt="K" style="margin:0;width:45px;height:45px;animation:none;">
-            <h3 style="margin:0;font-size:32px;">zova Labs</h3>
-          </div>
-          <p>Software Developer</p>
-          <div class="about-mini-stats">
-            <div class="mini-stat"><div class="n">Windows</div><div class="l">Specialist</div></div>
-            <div class="mini-stat"><div class="n">Web</div><div class="l">Fullstack</div></div>
-            <div class="mini-stat"><div class="n">100%</div><div class="l">Passion</div></div>
-            <div class="mini-stat"><div class="n">Global</div><div class="l">Reach</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="about-text reveal-left">
-      <div class="section-tag">About Me</div>
-      <h2>Building Software That <span>Inspires</span></h2>
-      <p id="dynamic-about-p1">I am an independent software developer passionate about building high-quality, user-respecting digital products. I believe that software should be beautiful, fast, and accessible everywhere.</p>
-      <p id="dynamic-about-p2">Whether it's native Windows applications that feel right at home on Windows, or cross-platform utilities that bridge the gap between devices, I focus on delivering seamless experiences with clean code and modern architecture.</p>
-      <div class="about-features">
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(14,165,233,.12)">💻</div>
-          <span>Native Windows Apps</span>
-        </div>
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(16,185,129,.12)">📱</div>
-          <span>Cross-Platform</span>
-        </div>
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(0,230,118,.12)">🎨</div>
-          <span>Modern UI/UX</span>
-        </div>
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(255,107,157,.12)">⚡</div>
-          <span>Performance First</span>
-        </div>
-      </div>
-    </div>
+
+<!-- MY PROJECTS -->
+<section id="github" class="section">
+  <div class="section-center section-header reveal-blur">
+    <div class="section-tag">My Projects</div>
+    <h2 class="section-h">Working <span>Projects</span></h2>
+    <p class="section-p">Explore my public repositories and working projects.</p>
+  </div>
+  <div class="repos-grid" id="reposGrid">
+    <!-- Populated by JS -->
+    <div class="repo-card repo-skeleton" style="height:200px;border-radius:18px"></div>
+    <div class="repo-card repo-skeleton" style="height:200px;border-radius:18px"></div>
+    <div class="repo-card repo-skeleton" style="height:200px;border-radius:18px"></div>
   </div>
 </section>
 

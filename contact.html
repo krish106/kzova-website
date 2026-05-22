@@ -378,94 +378,35 @@ body:hover .cursor-ring { }
   <a href="contact.html">Reviews</a>
 </div>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="float-card fc-1">
-    <div class="fc-icon" style="background:rgba(14,165,233,.15)">💻</div>
-    <div class="fc-label"><strong>Windows Apps</strong><span>Native Windows Experiences</span></div>
-  </div>
-  <div class="float-card fc-2">
-    <div class="fc-icon" style="background:rgba(16,185,129,.15)">📱</div>
-    <div class="fc-label"><strong>Cross-Platform</strong><span>Any Device, Anywhere</span></div>
-  </div>
-  <div class="float-card fc-3">
-    <div class="fc-icon" style="background:rgba(0,230,118,.15)">⚡</div>
-    <div class="fc-label"><strong>High Performance</strong><span>Optimized & Fast</span></div>
-  </div>
-  <div class="float-card fc-4">
-    <div class="fc-icon" style="background:rgba(255,107,157,.15)">✨</div>
-    <div class="fc-label"><strong>Beautiful UI</strong><span>Pixel-Perfect Design</span></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-tag" id="dynamic-hero-tag">
-      <span class="pulse-dot"></span>
-      Independent Developer Studio
-    </div>
-    <h1 class="hero-h1">
-      <span class="word-white" id="dynamic-hero-h1-white">Crafting Beautiful</span>
-      <span class="word-gradient" id="dynamic-hero-h1-grad">Digital Experiences.</span>
-    </h1>
-    <p class="hero-p" id="dynamic-hero-p">
-      Hi, we are Kzova Labs. We build intuitive, high-performance software for Windows and cross-platform environments. Let's make something amazing together.
-    </p>
-    <div class="hero-btns">
-      <a href="#product" class="btn-grad">View My Apps →</a>
-      <a href="#about" class="btn-outline">About Me</a>
-    </div>
-  </div>
-</section>
-
-<!-- STATS BELT -->
-<div id="stats-belt" class="glow-divider" style="display:none">
-  <div class="stats-grid" id="dynamic-stats-grid"></div>
-</div>
-
-<!-- ABOUT -->
-<section id="about" class="section">
-  <div class="about-wrap">
-    <div class="about-visual-wrap reveal-right">
-      <div class="about-3d-card">
-        <div class="about-3d-inner">
-          <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:12px">
-            <img src="klogo.png" class="about-logo-img" alt="K" style="margin:0;width:45px;height:45px;animation:none;">
-            <h3 style="margin:0;font-size:32px;">zova Labs</h3>
-          </div>
-          <p>Software Developer</p>
-          <div class="about-mini-stats">
-            <div class="mini-stat"><div class="n">Windows</div><div class="l">Specialist</div></div>
-            <div class="mini-stat"><div class="n">Web</div><div class="l">Fullstack</div></div>
-            <div class="mini-stat"><div class="n">100%</div><div class="l">Passion</div></div>
-            <div class="mini-stat"><div class="n">Global</div><div class="l">Reach</div></div>
-          </div>
+<!-- REVIEWS -->
+<div class="glow-divider"></div>
+<section id="contact" class="section">
+  <div class="contact-wrap reveal-zoom">
+    <div class="section-tag">Community</div>
+    <h2 class="section-h">Comments & <span>Reviews</span></h2>
+    <p class="section-p">Have you used my apps? Share your thoughts and opinions below.</p>
+    <form class="contact-form" onsubmit="handleReviewSubmit(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="text" placeholder="App Name" required>
+      <input type="email" placeholder="Your Email (Optional)" class="full">
+      <div class="star-rating full">
+        <label>Rating:</label>
+        <div class="stars">
+          <input type="radio" name="rating" id="r5" value="5" required><label for="r5">★</label>
+          <input type="radio" name="rating" id="r4" value="4"><label for="r4">★</label>
+          <input type="radio" name="rating" id="r3" value="3"><label for="r3">★</label>
+          <input type="radio" name="rating" id="r2" value="2"><label for="r2">★</label>
+          <input type="radio" name="rating" id="r1" value="1"><label for="r1">★</label>
         </div>
       </div>
-    </div>
-    <div class="about-text reveal-left">
-      <div class="section-tag">About Me</div>
-      <h2>Building Software That <span>Inspires</span></h2>
-      <p id="dynamic-about-p1">I am an independent software developer passionate about building high-quality, user-respecting digital products. I believe that software should be beautiful, fast, and accessible everywhere.</p>
-      <p id="dynamic-about-p2">Whether it's native Windows applications that feel right at home on Windows, or cross-platform utilities that bridge the gap between devices, I focus on delivering seamless experiences with clean code and modern architecture.</p>
-      <div class="about-features">
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(14,165,233,.12)">💻</div>
-          <span>Native Windows Apps</span>
-        </div>
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(16,185,129,.12)">📱</div>
-          <span>Cross-Platform</span>
-        </div>
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(0,230,118,.12)">🎨</div>
-          <span>Modern UI/UX</span>
-        </div>
-        <div class="af-item">
-          <div class="af-icon" style="background:rgba(255,107,157,.12)">⚡</div>
-          <span>Performance First</span>
-        </div>
+      <textarea placeholder="Your review..." class="full" rows="5" required></textarea>
+      <div class="full" style="text-align:center">
+        <button type="submit" class="btn-grad" style="width:100%;max-width:320px;justify-content:center">Submit Review →</button>
       </div>
-    </div>
+    </form>
   </div>
 </section>
+<div class="glow-divider"></div>
 
 <!-- FOOTER -->
 <footer id="footer">
