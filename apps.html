@@ -369,6 +369,8 @@ body:hover .cursor-ring { }
     <span></span><span></span><span></span>
   </button>
 </nav>
+<main id="main-content">
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
@@ -447,6 +449,8 @@ body:hover .cursor-ring { }
 </section>
 
 <!-- FOOTER -->
+
+</main>
 <footer id="footer">
   <div class="footer-grid">
     <div class="footer-brand">
@@ -484,8 +488,18 @@ body:hover .cursor-ring { }
 </footer>
 
 <script>
-// Preloader
-window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('preloader').classList.add('done'),2000)});
+// Smart Preloader (only runs once per session)
+window.addEventListener('load', () => {
+  const loader = document.getElementById('preloader');
+  if (loader) {
+    if (sessionStorage.getItem('visited')) {
+      loader.classList.add('done');
+    } else {
+      sessionStorage.setItem('visited', 'true');
+      setTimeout(() => loader.classList.add('done'), 1200); // slightly faster premium transition
+    }
+  }
+});
 
 // Cursor
 const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
@@ -694,6 +708,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 </script>
+<script src="router.js"></script>
 </body>
 </html>
 
