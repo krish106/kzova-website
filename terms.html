@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions - Arion VPN</title>
+  <link rel="icon" href="klogo.png" type="image/png">
+  <style>
+    body { background: #06060f; color: #fff; font-family: 'Inter', sans-serif; padding: 60px 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; margin-bottom: 20px; color: #0ea5e9; }
+    h2 { font-size: 20px; margin-top: 30px; margin-bottom: 10px; color: #fff; }
+    p { color: #94a3b8; font-size: 15px; margin-bottom: 16px; }
+    a { color: #0ea5e9; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .back-btn { display: inline-block; margin-bottom: 40px; color: #94a3b8; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <a href="index.html#product" onclick="if(document.referrer.includes(window.location.host)) { window.history.back(); return false; }" class="back-btn">← Back to Home</a>
+  <h1>Terms & Conditions</h1>
+  <p>Last updated: May 2026</p>
+  
+  <div id="dynamic-terms-content">
+    <p>Loading Terms & Conditions...</p>
+  </div>
+
+  <script>
+    async function loadLegalData() {
+      try {
+        const res = await fetch('/api/data');
+        if (!res.ok) throw new Error('Failed to load API data');
+        const data = await res.json();
+        
+        if (data.legal && data.legal.terms_content) {
+          document.getElementById('dynamic-terms-content').innerHTML = data.legal.terms_content;
+        } else {
+          document.getElementById('dynamic-terms-content').innerHTML = '<p>Terms and conditions content not found.</p>';
+        }
+      } catch(e) {
+        console.error(e);
+        document.getElementById('dynamic-terms-content').innerHTML = '<p>Error loading terms and conditions.</p>';
+      }
+    }
+    loadLegalData();
+  </script>
+</body>
+</html>

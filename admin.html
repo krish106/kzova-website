@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kzova Admin Panel</title>
+<link rel="icon" href="klogo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#030712;--bg2:#0B1120;--bg3:#111827;
+  --card:rgba(255,255,255,0.035);--card-hover:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.07);--border-glow:rgba(14,165,233,0.35);
+  --primary:#0EA5E9;--secondary:#10B981;--accent:#6366F1;
+  --danger:#EF4444;--warning:#F59E0B;
+  --text:#FFFFFF;--muted:rgba(255,255,255,0.55);--muted2:rgba(255,255,255,0.35);
+  --grad1:linear-gradient(135deg,#0EA5E9,#10B981);
+  --grad2:linear-gradient(135deg,#6366F1,#0EA5E9);
+  --sidebar-w:260px;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(#0EA5E9,#10B981);border-radius:3px}
+
+/* ── LOGIN SCREEN ── */
+#login-screen{
+  position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .5s,visibility .5s;
+}
+#login-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.login-box{
+  width:100%;max-width:420px;padding:48px 40px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);border-radius:24px;
+  backdrop-filter:blur(20px);text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  animation:loginFadeIn .6s ease both;
+}
+@keyframes loginFadeIn{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.login-box .logo-area{margin-bottom:28px}
+.login-box .logo-area h1{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.login-box .logo-area p{color:var(--muted);font-size:13px;margin-top:6px}
+.login-input-wrap{position:relative;margin-bottom:20px}
+.login-input-wrap input{
+  width:100%;padding:16px 20px 16px 48px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:12px;color:#fff;font-size:15px;font-family:inherit;
+  outline:none;transition:all .3s;
+}
+.login-input-wrap input:focus{border-color:var(--primary);box-shadow:0 0 20px rgba(14,165,233,.15)}
+.login-input-wrap .icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted)}
+.login-btn{
+  width:100%;padding:16px;border:none;border-radius:12px;
+  background:var(--grad1);color:#fff;font-size:15px;font-weight:700;
+  font-family:inherit;cursor:pointer;
+  box-shadow:0 0 24px rgba(14,165,233,.3);
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(14,165,233,.5)}
+.login-btn:active{transform:scale(.98)}
+.login-error{color:var(--danger);font-size:13px;margin-top:12px;min-height:20px}
+
+/* ── LAYOUT ── */
+#app{display:flex;min-height:100vh;opacity:0;transition:opacity .4s}
+#app.visible{opacity:1}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);min-height:100vh;position:fixed;left:0;top:0;
+  background:rgba(6,6,15,.95);backdrop-filter:blur(20px);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;
+  transition:transform .3s;
+}
+.sidebar-brand{padding:24px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sidebar-brand h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sidebar-brand .badge{font-size:10px;padding:2px 8px;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.3);border-radius:20px;color:var(--primary);font-weight:600;letter-spacing:.5px}
+.sidebar-nav{flex:1;padding:16px 12px;overflow-y:auto}
+.sidebar-nav a{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border-radius:10px;
+  color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;
+  transition:all .2s;margin-bottom:2px;
+}
+.sidebar-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+.sidebar-nav a.active{color:#fff;background:rgba(14,165,233,.12);border:1px solid rgba(14,165,233,.2)}
+.sidebar-nav a .nav-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.sidebar-footer .preview-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;border-radius:10px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.sidebar-footer .preview-btn:hover{border-color:var(--primary);color:#fff;background:rgba(14,165,233,.08)}
+.sidebar-footer .logout-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;border-radius:10px;border:1px solid rgba(239,68,68,.2);
+  background:transparent;color:rgba(239,68,68,.7);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .3s;
+}
+.sidebar-footer .logout-btn:hover{border-color:var(--danger);color:var(--danger);background:rgba(239,68,68,.08)}
+
+/* ── MAIN CONTENT ── */
+.main{margin-left:var(--sidebar-w);flex:1;padding:32px 40px;max-width:900px}
+.main-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border);
+}
+.main-header h1{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800}
+.main-header h1 span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.save-bar{display:flex;gap:10px;align-items:center}
+.unsaved-dot{width:8px;height:8px;border-radius:50%;background:var(--warning);animation:pulse 1.5s ease-in-out infinite;display:none}
+.unsaved-dot.show{display:block}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.save-btn{
+  padding:10px 28px;border:none;border-radius:10px;
+  background:var(--grad1);color:#fff;font-size:14px;font-weight:700;
+  font-family:inherit;cursor:pointer;
+  box-shadow:0 0 18px rgba(14,165,233,.25);
+  transition:all .3s;
+}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(14,165,233,.5)}
+.save-btn:active{transform:scale(.97)}
+.save-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── SECTION PANELS ── */
+.panel{display:none;animation:panelIn .35s ease both}
+.panel.active{display:block}
+@keyframes panelIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ── */
+.editor-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;margin-bottom:20px;
+  transition:border-color .3s;
+}
+.editor-card:hover{border-color:rgba(255,255,255,.12)}
+.editor-card h3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.editor-card h3 .card-icon{font-size:18px}
+
+/* ── FORM ELEMENTS ── */
+.form-group{margin-bottom:16px}
+.form-group:last-child{margin-bottom:0}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;padding:12px 16px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:10px;color:#fff;font-size:14px;font-family:inherit;
+  outline:none;transition:all .3s;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  border-color:var(--primary);box-shadow:0 0 16px rgba(14,165,233,.12)
+}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* ── LIST ITEMS (features, tech, projects, stats) ── */
+.list-item{
+  background:rgba(255,255,255,0.02);border:1px dashed var(--border);
+  border-radius:12px;padding:20px;margin-bottom:12px;
+  position:relative;transition:all .3s;
+}
+.list-item:hover{border-color:rgba(14,165,233,.3);background:rgba(14,165,233,.02)}
+.list-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.list-item-header .item-title{font-size:14px;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:6px}
+.list-item-header .item-actions{display:flex;gap:6px}
+.item-action-btn{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.item-action-btn:hover{border-color:var(--primary);color:#fff;background:rgba(14,165,233,.1)}
+.item-action-btn.danger:hover{border-color:var(--danger);color:var(--danger);background:rgba(239,68,68,.1)}
+
+.add-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:14px;border-radius:12px;
+  border:1px dashed rgba(14,165,233,.3);
+  background:transparent;color:var(--primary);
+  font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;
+  transition:all .3s;margin-top:8px;
+}
+.add-btn:hover{background:rgba(14,165,233,.06);border-color:var(--primary)}
+
+/* ── TOAST ── */
+.toast-container{position:fixed;top:24px;right:24px;z-index:10000;display:flex;flex-direction:column;gap:10px}
+.toast{
+  padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  animation:toastIn .4s ease both;display:flex;align-items:center;gap:10px;
+  backdrop-filter:blur(12px);min-width:280px;
+}
+.toast.success{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#10B981}
+.toast.error{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#EF4444}
+.toast.removing{animation:toastOut .3s ease both}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
+
+/* ── MOBILE ── */
+.mobile-toggle{display:none;position:fixed;top:16px;left:16px;z-index:200;width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:rgba(6,6,15,.95);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(12px)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .mobile-toggle{display:flex;align-items:center;justify-content:center}
+  .main{margin-left:0;padding:80px 20px 32px}
+  .form-row,.form-row-3{grid-template-columns:1fr}
+  .main-header{flex-direction:column;gap:16px;align-items:flex-start}
+}
+
+/* ── COLOR INPUT ── */
+.color-input-wrap{display:flex;gap:8px;align-items:center}
+.color-input-wrap input[type="color"]{width:40px;height:36px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer;padding:2px}
+.color-input-wrap input[type="text"]{flex:1}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(14,165,233,.3),transparent);margin:32px 0}
+
+/* ── DOWNLOAD LINK HIGHLIGHT ── */
+.download-highlight{
+  background:rgba(14,165,233,.04);border:1px solid rgba(14,165,233,.15);
+  border-radius:12px;padding:20px;margin-bottom:16px;
+}
+.download-highlight .dl-label{font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toasts"></div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="logo-area">
+      <h1>⚙️ Admin Panel</h1>
+      <p>Kzova Labs Website Management</p>
+    </div>
+    <div class="login-input-wrap">
+      <span class="icon">🔒</span>
+      <input type="password" id="loginPassword" placeholder="Enter admin password" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- MOBILE TOGGLE -->
+<button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- APP -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <h2>Kzova Admin</h2>
+      <span class="badge">v2.0</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="active" data-panel="hero" onclick="switchPanel('hero',this)"><span class="nav-icon">🏠</span>Hero Section</a>
+      <a href="#" data-panel="about" onclick="switchPanel('about',this)"><span class="nav-icon">👤</span>About</a>
+      <a href="#" data-panel="product" onclick="switchPanel('product',this)"><span class="nav-icon">📦</span>Product & Downloads</a>
+      <a href="#" data-panel="features" onclick="switchPanel('features',this)"><span class="nav-icon">⚡</span>Features</a>
+      <a href="#" data-panel="stats" onclick="switchPanel('stats',this)"><span class="nav-icon">📊</span>Stats</a>
+      <a href="#" data-panel="tech" onclick="switchPanel('tech',this)"><span class="nav-icon">🔧</span>Tech Stack</a>
+      <a href="#" data-panel="projects" onclick="switchPanel('projects',this)"><span class="nav-icon">📁</span>Projects</a>
+      <a href="#" data-panel="reviews" onclick="switchPanel('reviews',this)"><span class="nav-icon">📬</span>Reviews Inbox</a>
+      <a href="#" data-panel="legal" onclick="switchPanel('legal',this)"><span class="nav-icon">📄</span>Legal Pages</a>
+      <a href="#" data-panel="footer" onclick="switchPanel('footer',this)"><span class="nav-icon">🔗</span>Footer & Social</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/" target="_blank" class="preview-btn">👁️ Preview Website</a>
+      <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="main-header">
+      <h1>Website <span>Editor</span></h1>
+      <div class="save-bar">
+        <div class="unsaved-dot" id="unsavedDot" title="Unsaved changes"></div>
+        <button class="save-btn" id="saveBtn" onclick="saveData()">💾 Save All Changes</button>
+      </div>
+    </div>
+
+    <!-- ════ HERO ════ -->
+    <div class="panel active" id="panel-hero">
+      <div class="editor-card">
+        <h3><span class="card-icon">🏠</span> Hero Section</h3>
+        <div class="form-group">
+          <label>Tag Line (above heading)</label>
+          <input type="text" id="heroTag" oninput="markDirty()">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Heading — White Text</label>
+            <input type="text" id="heroH1White" oninput="markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Heading — Gradient Text</label>
+            <input type="text" id="heroH1Grad" oninput="markDirty()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description Paragraph</label>
+          <textarea id="heroP" rows="3" oninput="markDirty()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ ABOUT ════ -->
+    <div class="panel" id="panel-about">
+      <div class="editor-card">
+        <h3><span class="card-icon">👤</span> About Section</h3>
+        <div class="form-group">
+          <label>Paragraph 1</label>
+          <textarea id="aboutP1" rows="4" oninput="markDirty()"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Paragraph 2</label>
+          <textarea id="aboutP2" rows="4" oninput="markDirty()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PRODUCT & DOWNLOADS ════ -->
+    <div class="panel" id="panel-product">
+      <div class="editor-card">
+        <h3><span class="card-icon">📦</span> Product Info</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="productName" oninput="markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Name Highlight (gradient word)</label>
+            <input type="text" id="productNameHL" oninput="markDirty()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Badge Text</label>
+          <input type="text" id="productBadge" oninput="markDirty()" placeholder="e.g. 🟢 Available Now">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="productDesc" rows="3" oninput="markDirty()"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Platforms Text</label>
+          <input type="text" id="productPlatforms" oninput="markDirty()" placeholder="e.g. Windows • Android">
+        </div>
+      </div>
+
+      <div class="editor-card">
+        <h3><span class="card-icon">⬇️</span> Download Links</h3>
+        <div class="download-highlight">
+          <div class="dl-label">🤖 Android Download URL</div>
+          <div class="form-group" style="margin-bottom:0">
+            <input type="url" id="dlAndroid" oninput="markDirty()" placeholder="https://play.google.com/store/apps/...">
+          </div>
+        </div>
+        <div class="download-highlight">
+          <div class="dl-label">🖥️ Windows Download URL</div>
+          <div class="form-group" style="margin-bottom:0">
+            <input type="url" id="dlWindows" oninput="markDirty()" placeholder="https://example.com/download/windows...">
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-card">
+        <h3><span class="card-icon">📄</span> Legal Page Links</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Privacy Policy URL</label>
+            <input type="text" id="privacyUrl" oninput="markDirty()" placeholder="privacy.html">
+          </div>
+          <div class="form-group">
+            <label>Terms & Conditions URL</label>
+            <input type="text" id="termsUrl" oninput="markDirty()" placeholder="terms.html">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ LEGAL CONTENT ════ -->
+    <div class="panel" id="panel-legal">
+      <div class="editor-card">
+        <h3><span class="card-icon">📄</span> Legal Pages Content</h3>
+        <p style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">Edit the actual HTML content of your legal pages here. These will be loaded dynamically on privacy.html and terms.html.</p>
+        
+        <div class="form-group">
+          <label>Privacy Policy Content (HTML)</label>
+          <textarea id="privacyContent" rows="12" style="font-family: monospace; font-size: 13px;" oninput="markDirty()"></textarea>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="form-group">
+          <label>Terms & Conditions Content (HTML)</label>
+          <textarea id="termsContent" rows="12" style="font-family: monospace; font-size: 13px;" oninput="markDirty()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ FEATURES ════ -->
+    <div class="panel" id="panel-features">
+      <div class="editor-card">
+        <h3><span class="card-icon">⚡</span> Feature Cards</h3>
+        <div id="featuresList"></div>
+        <button class="add-btn" onclick="addFeature()">+ Add Feature</button>
+      </div>
+    </div>
+
+    <!-- ════ STATS ════ -->
+    <div class="panel" id="panel-stats">
+      <div class="editor-card">
+        <h3><span class="card-icon">📊</span> Stats Belt</h3>
+        <div id="statsList"></div>
+        <button class="add-btn" onclick="addStat()">+ Add Stat</button>
+      </div>
+    </div>
+
+    <!-- ════ TECH ════ -->
+    <div class="panel" id="panel-tech">
+      <div class="editor-card">
+        <h3><span class="card-icon">🔧</span> Tech Stack Cards</h3>
+        <div id="techList"></div>
+        <button class="add-btn" onclick="addTech()">+ Add Technology</button>
+      </div>
+    </div>
+
+    <!-- ════ PROJECTS ════ -->
+    <div class="panel" id="panel-projects">
+      <div class="editor-card">
+        <h3><span class="card-icon">📁</span> Working Projects</h3>
+        <div id="projectsList"></div>
+        <button class="add-btn" onclick="addProject()">+ Add Project</button>
+      </div>
+    </div>
+
+    <!-- ════ REVIEWS INBOX ════ -->
+    <div class="panel" id="panel-reviews">
+      <div class="editor-card">
+        <h3><span class="card-icon">📬</span> Customer Reviews</h3>
+        <p style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">Recent form submissions from the website.</p>
+        <div id="reviewsList" style="display: flex; flex-direction: column; gap: 16px;">
+          <p style="color:var(--muted)">Loading reviews...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ FOOTER ════ -->
+    <div class="panel" id="panel-footer">
+      <div class="editor-card">
+        <h3><span class="card-icon">🔗</span> Footer Content</h3>
+        <div class="form-group">
+          <label>Footer Description</label>
+          <textarea id="footerDesc" rows="3" oninput="markDirty()"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>GitHub URL</label>
+            <input type="url" id="footerGithub" oninput="markDirty()" placeholder="https://github.com/...">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="footerEmail" oninput="markDirty()" placeholder="contact@example.com">
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="form-group">
+          <label>Copyright Text</label>
+          <input type="text" id="footerCopyright" oninput="markDirty()">
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Built By Text</label>
+            <input type="text" id="footerBuiltText" oninput="markDirty()" placeholder="Built by">
+          </div>
+          <div class="form-group">
+            <label>Built By Name</label>
+            <input type="text" id="footerBuiltName" oninput="markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Built By URL</label>
+            <input type="url" id="footerBuiltUrl" oninput="markDirty()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let data = null;
+let isDirty = false;
+
+// ── TOAST ──
+function showToast(message, type = 'success') {
+  const c = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}`;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, 3000);
+}
+
+// ── DIRTY STATE ──
+function markDirty() {
+  isDirty = true;
+  document.getElementById('unsavedDot').classList.add('show');
+}
+function clearDirty() {
+  isDirty = false;
+  document.getElementById('unsavedDot').classList.remove('show');
+}
+
+// ── LOGIN ──
+async function doLogin() {
+  const pw = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  if (!pw) { errEl.textContent = 'Please enter a password'; return; }
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ password: pw })
+    });
+    if (res.ok) {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('app').classList.add('visible');
+      loadData();
+    } else {
+      errEl.textContent = 'Incorrect password. Try again.';
+      document.getElementById('loginPassword').value = '';
+    }
+  } catch (e) { errEl.textContent = 'Connection error'; }
+}
+document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// ── CHECK AUTH ──
+async function checkAuth() {
+  try {
+    const res = await fetch('/api/auth-check', { credentials: 'include' });
+    const d = await res.json();
+    if (d.authenticated) {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('app').classList.add('visible');
+      loadData();
+    }
+  } catch (e) {}
+}
+checkAuth();
+
+// ── LOGOUT ──
+async function doLogout() {
+  await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+  location.reload();
+}
+
+// ── SIDEBAR ──
+function switchPanel(name, el) {
+  event.preventDefault();
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  // Close on mobile
+  if (window.innerWidth <= 768) toggleSidebar();
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── LOAD DATA ──
+async function loadData() {
+  try {
+    const res = await fetch('/api/data', { credentials: 'include' });
+    data = await res.json();
+    populateFields();
+
+    // Also load reviews
+    const revRes = await fetch('/api/reviews', { credentials: 'include' });
+    if(revRes.ok) {
+      const reviewsData = await revRes.json();
+      renderReviews(reviewsData);
+    }
+  } catch (e) {
+    showToast('Failed to load data', 'error');
+  }
+}
+
+function renderReviews(reviewsData) {
+  const container = document.getElementById('reviewsList');
+  if (!reviewsData || reviewsData.length === 0) {
+    container.innerHTML = '<p style="color:var(--muted)">No reviews yet.</p>';
+    return;
+  }
+  
+  // Show newest first
+  container.innerHTML = reviewsData.reverse().map(r => `
+    <div style="background:var(--card); border:1px solid var(--border); padding:16px; border-radius:12px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+        <strong style="color:var(--primary)">${esc(r.name)}</strong>
+        <span style="color:var(--muted); font-size:12px;">${new Date(r.date).toLocaleDateString()}</span>
+      </div>
+      <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">
+        Email: ${esc(r.email) || 'N/A'} • Rating: ${'⭐'.repeat(r.rating)}
+      </div>
+      <div style="line-height:1.6; font-size:14px; background:rgba(0,0,0,0.2); padding:12px; border-radius:8px;">
+        ${esc(r.review)}
+      </div>
+    </div>
+  `).join('');
+}
+
+function populateFields() {
+  // Hero
+  document.getElementById('heroTag').value = data.hero?.tag || '';
+  document.getElementById('heroH1White').value = data.hero?.h1_white || '';
+  document.getElementById('heroH1Grad').value = data.hero?.h1_gradient || '';
+  document.getElementById('heroP').value = data.hero?.p || '';
+
+  // About
+  document.getElementById('aboutP1').value = data.about?.p1 || '';
+  document.getElementById('aboutP2').value = data.about?.p2 || '';
+
+  // Product
+  document.getElementById('productName').value = data.product?.name || '';
+  document.getElementById('productNameHL').value = data.product?.name_highlight || '';
+  document.getElementById('productBadge').value = data.product?.badge || '';
+  document.getElementById('productDesc').value = data.product?.description || '';
+  document.getElementById('productPlatforms').value = data.product?.platforms || '';
+  document.getElementById('dlAndroid').value = data.product?.download_android_url || '';
+  document.getElementById('dlWindows').value = data.product?.download_windows_url || '';
+  document.getElementById('privacyUrl').value = data.product?.privacy_url || '';
+  document.getElementById('termsUrl').value = data.product?.terms_url || '';
+
+  // Legal
+  document.getElementById('privacyContent').value = data.legal?.privacy_content || '';
+  document.getElementById('termsContent').value = data.legal?.terms_content || '';
+
+  // Footer
+  document.getElementById('footerDesc').value = data.footer?.description || '';
+  document.getElementById('footerGithub').value = data.footer?.github_url || '';
+  document.getElementById('footerEmail').value = data.footer?.email || '';
+  document.getElementById('footerCopyright').value = data.footer?.copyright || '';
+  document.getElementById('footerBuiltText').value = data.footer?.built_by_text || '';
+  document.getElementById('footerBuiltName').value = data.footer?.built_by_name || '';
+  document.getElementById('footerBuiltUrl').value = data.footer?.built_by_url || '';
+
+  // Lists
+  renderFeatures();
+  renderStats();
+  renderTech();
+  renderProjects();
+
+  clearDirty();
+}
+
+// ── FEATURES ──
+function renderFeatures() {
+  const el = document.getElementById('featuresList');
+  el.innerHTML = '';
+  (data.features || []).forEach((f, i) => {
+    el.innerHTML += `
+      <div class="list-item" id="feat-${i}">
+        <div class="list-item-header">
+          <span class="item-title">${f.icon || '⚡'} Feature ${i + 1}</span>
+          <div class="item-actions">
+            ${i > 0 ? `<button class="item-action-btn" onclick="moveItem('features',${i},-1)" title="Move Up">↑</button>` : ''}
+            ${i < data.features.length - 1 ? `<button class="item-action-btn" onclick="moveItem('features',${i},1)" title="Move Down">↓</button>` : ''}
+            <button class="item-action-btn danger" onclick="removeItem('features',${i})" title="Remove">✕</button>
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Icon (emoji)</label>
+            <input type="text" value="${esc(f.icon)}" onchange="data.features[${i}].icon=this.value;markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Icon BG Color</label>
+            <input type="text" value="${esc(f.icon_bg)}" onchange="data.features[${i}].icon_bg=this.value;markDirty()" placeholder="rgba(...)">
+          </div>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" value="${esc(f.title)}" onchange="data.features[${i}].title=this.value;markDirty()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea rows="2" onchange="data.features[${i}].description=this.value;markDirty()">${esc(f.description)}</textarea>
+        </div>
+      </div>`;
+  });
+}
+function addFeature() {
+  if (!data.features) data.features = [];
+  data.features.push({ icon: '⭐', icon_bg: 'rgba(14,165,233,.12)', title: 'New Feature', description: '' });
+  renderFeatures(); markDirty();
+}
+
+// ── STATS ──
+function renderStats() {
+  const el = document.getElementById('statsList');
+  el.innerHTML = '';
+  (data.stats || []).forEach((s, i) => {
+    el.innerHTML += `
+      <div class="list-item">
+        <div class="list-item-header">
+          <span class="item-title">📊 Stat ${i + 1}</span>
+          <div class="item-actions">
+            ${i > 0 ? `<button class="item-action-btn" onclick="moveItem('stats',${i},-1)">↑</button>` : ''}
+            ${i < data.stats.length - 1 ? `<button class="item-action-btn" onclick="moveItem('stats',${i},1)">↓</button>` : ''}
+            <button class="item-action-btn danger" onclick="removeItem('stats',${i})">✕</button>
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Value (number)</label>
+            <input type="number" value="${s.value}" onchange="data.stats[${i}].value=parseInt(this.value)||0;markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Suffix</label>
+            <input type="text" value="${esc(s.suffix)}" onchange="data.stats[${i}].suffix=this.value;markDirty()" placeholder="e.g. + or %">
+          </div>
+          <div class="form-group">
+            <label>Label</label>
+            <input type="text" value="${esc(s.label)}" onchange="data.stats[${i}].label=this.value;markDirty()">
+          </div>
+        </div>
+      </div>`;
+  });
+}
+function addStat() {
+  if (!data.stats) data.stats = [];
+  data.stats.push({ value: 0, suffix: '+', label: 'New Stat' });
+  renderStats(); markDirty();
+}
+
+// ── TECH ──
+function renderTech() {
+  const el = document.getElementById('techList');
+  el.innerHTML = '';
+  (data.tech || []).forEach((t, i) => {
+    el.innerHTML += `
+      <div class="list-item">
+        <div class="list-item-header">
+          <span class="item-title">${t.icon || '🔧'} Tech ${i + 1}</span>
+          <div class="item-actions">
+            ${i > 0 ? `<button class="item-action-btn" onclick="moveItem('tech',${i},-1)">↑</button>` : ''}
+            ${i < data.tech.length - 1 ? `<button class="item-action-btn" onclick="moveItem('tech',${i},1)">↓</button>` : ''}
+            <button class="item-action-btn danger" onclick="removeItem('tech',${i})">✕</button>
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Icon (emoji)</label>
+            <input type="text" value="${esc(t.icon)}" onchange="data.tech[${i}].icon=this.value;markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" value="${esc(t.name)}" onchange="data.tech[${i}].name=this.value;markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" value="${esc(t.description)}" onchange="data.tech[${i}].description=this.value;markDirty()">
+          </div>
+        </div>
+      </div>`;
+  });
+}
+function addTech() {
+  if (!data.tech) data.tech = [];
+  data.tech.push({ icon: '🆕', name: 'New Tech', description: '' });
+  renderTech(); markDirty();
+}
+
+// ── PROJECTS ──
+function renderProjects() {
+  const el = document.getElementById('projectsList');
+  el.innerHTML = '';
+  (data.projects || []).forEach((p, i) => {
+    el.innerHTML += `
+      <div class="list-item">
+        <div class="list-item-header">
+          <span class="item-title">📁 ${esc(p.name)}</span>
+          <div class="item-actions">
+            ${i > 0 ? `<button class="item-action-btn" onclick="moveItem('projects',${i},-1)">↑</button>` : ''}
+            ${i < data.projects.length - 1 ? `<button class="item-action-btn" onclick="moveItem('projects',${i},1)">↓</button>` : ''}
+            <button class="item-action-btn danger" onclick="removeItem('projects',${i})">✕</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" value="${esc(p.name)}" onchange="data.projects[${i}].name=this.value;markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Language</label>
+            <input type="text" value="${esc(p.lang)}" onchange="data.projects[${i}].lang=this.value;markDirty()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea rows="2" onchange="data.projects[${i}].description=this.value;markDirty()">${esc(p.description)}</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>URL</label>
+            <input type="url" value="${esc(p.url)}" onchange="data.projects[${i}].url=this.value;markDirty()">
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <div class="color-input-wrap">
+              <input type="color" value="${p.color || '#7C6FFF'}" onchange="data.projects[${i}].color=this.value;markDirty()">
+              <input type="text" value="${esc(p.color)}" onchange="data.projects[${i}].color=this.value;markDirty()">
+            </div>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+function addProject() {
+  if (!data.projects) data.projects = [];
+  data.projects.push({ name: 'New Project', description: '', lang: 'JavaScript', color: '#7C6FFF', stars: 0, url: '' });
+  renderProjects(); markDirty();
+}
+
+// ── GENERIC HELPERS ──
+function moveItem(section, idx, dir) {
+  const arr = data[section];
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= arr.length) return;
+  [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+  const renderMap = { features: renderFeatures, stats: renderStats, tech: renderTech, projects: renderProjects };
+  renderMap[section](); markDirty();
+}
+function removeItem(section, idx) {
+  data[section].splice(idx, 1);
+  const renderMap = { features: renderFeatures, stats: renderStats, tech: renderTech, projects: renderProjects };
+  renderMap[section](); markDirty();
+}
+function esc(str) {
+  if (str === undefined || str === null) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ── COLLECT & SAVE ──
+function collectData() {
+  // Hero
+  data.hero = {
+    tag: document.getElementById('heroTag').value,
+    h1_white: document.getElementById('heroH1White').value,
+    h1_gradient: document.getElementById('heroH1Grad').value,
+    p: document.getElementById('heroP').value
+  };
+  // About
+  data.about = {
+    p1: document.getElementById('aboutP1').value,
+    p2: document.getElementById('aboutP2').value
+  };
+  // Product
+  data.product = {
+    name: document.getElementById('productName').value,
+    name_highlight: document.getElementById('productNameHL').value,
+    badge: document.getElementById('productBadge').value,
+    description: document.getElementById('productDesc').value,
+    platforms: document.getElementById('productPlatforms').value,
+    download_android_url: document.getElementById('dlAndroid').value,
+    download_windows_url: document.getElementById('dlWindows').value,
+    privacy_url: document.getElementById('privacyUrl').value,
+    terms_url: document.getElementById('termsUrl').value
+  };
+  // Legal
+  data.legal = {
+    privacy_content: document.getElementById('privacyContent').value,
+    terms_content: document.getElementById('termsContent').value
+  };
+  // Footer
+  data.footer = {
+    description: document.getElementById('footerDesc').value,
+    github_url: document.getElementById('footerGithub').value,
+    email: document.getElementById('footerEmail').value,
+    copyright: document.getElementById('footerCopyright').value,
+    built_by_text: document.getElementById('footerBuiltText').value,
+    built_by_name: document.getElementById('footerBuiltName').value,
+    built_by_url: document.getElementById('footerBuiltUrl').value
+  };
+  // Lists (features, stats, tech, projects) are already updated via onchange
+}
+
+async function saveData() {
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Saving...';
+  collectData();
+  try {
+    const res = await fetch('/api/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ data })
+    });
+    if (res.ok) {
+      showToast('All changes saved successfully!');
+      clearDirty();
+    } else {
+      const err = await res.json();
+      showToast(err.error || 'Failed to save', 'error');
+    }
+  } catch (e) {
+    showToast('Connection error', 'error');
+  }
+  btn.disabled = false;
+  btn.textContent = '💾 Save All Changes';
+}
+
+// ── WARN ON LEAVE ──
+window.addEventListener('beforeunload', e => {
+  if (isDirty) { e.preventDefault(); e.returnValue = ''; }
+});
+</script>
+</body>
+</html>
