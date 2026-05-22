@@ -74,32 +74,7 @@
     { "icon": "📱", "name": "React Native", "description": "Mobile applications" },
     { "icon": "📦", "name": "Git", "description": "Version control" }
   ],
-  "projects": [
-    {
-      "name": "Core-Inventory",
-      "description": "A comprehensive core inventory management application.",
-      "lang": "JavaScript",
-      "color": "#F1E05A",
-      "stars": 0,
-      "url": "https://github.com/krish106/Core-Inventory"
-    },
-    {
-      "name": "InTune",
-      "description": "A custom tailored music experience.",
-      "lang": "TypeScript",
-      "color": "#2B7489",
-      "stars": 0,
-      "url": "https://github.com/krish106/InTune"
-    },
-    {
-      "name": "tv-screensaver-dashboard",
-      "description": "A TV screensaver dashboard application.",
-      "lang": "Various",
-      "color": "#7C6FFF",
-      "stars": 0,
-      "url": "https://github.com/krish106/tv-screensaver-dashboard"
-    }
-  ],
+  "projects": [],
   "footer": {
     "description": "Kzova Labs is an independent software development studio building high-quality Windows and cross-platform applications.",
     "github_url": "https://github.com/krish106",
