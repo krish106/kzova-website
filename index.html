@@ -512,6 +512,26 @@ async function loadDynamicData() {
       setText('dynamic-about-p2', data.about.p2);
     }
 
+    if (data.apps_gallery) {
+      const appsGrid = document.getElementById('dynamic-apps-grid');
+      if (appsGrid) {
+        appsGrid.innerHTML = data.apps_gallery.map(app => `
+          <div class="repo-card reveal visible" style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="feat-icon" style="background:${app.icon_bg};margin-bottom:0;width:48px;height:48px;font-size:20px;">${app.icon}</div>
+              <span class="product-badge" style="margin-bottom:0;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:#fff;">${app.badge}</span>
+            </div>
+            <h3 style="font-size:20px;margin-bottom:0;">${app.name}</h3>
+            <p style="flex-grow:1;min-height:0;margin-bottom:0;">${app.description}</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+              ${(app.platforms || []).map(plat => `<span class="section-tag" style="margin-bottom:0;padding:3px 10px;font-size:10px;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:var(--muted);">${plat}</span>`).join('')}
+            </div>
+            <a href="${app.url}" class="btn-outline" style="padding:10px 20px;font-size:13px;width:100%;justify-content:center;text-align:center;">View Details</a>
+          </div>
+        `).join('');
+      }
+    }
+    
     if (data.product) {
       const p = data.product;
       setText('dynamic-product-badge', p.badge || '');

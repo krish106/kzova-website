@@ -20,6 +20,35 @@
     "privacy_url": "privacy.html",
     "terms_url": "terms.html"
   },
+  "apps_gallery": [
+    {
+      "name": "Arion VPN",
+      "badge": "🟢 Active",
+      "description": "A flagship VPN application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.",
+      "icon": "🛡️",
+      "icon_bg": "rgba(16,185,129,.15)",
+      "platforms": ["Android", "Windows"],
+      "url": "#"
+    },
+    {
+      "name": "Core-Inventory",
+      "badge": "🔵 Beta",
+      "description": "A comprehensive core inventory management application for small to medium businesses.",
+      "icon": "📦",
+      "icon_bg": "rgba(14,165,233,.15)",
+      "platforms": ["Web", "Windows"],
+      "url": "#"
+    },
+    {
+      "name": "InTune",
+      "badge": "✨ New",
+      "description": "A custom tailored music experience with seamless playback and intuitive design.",
+      "icon": "🎵",
+      "icon_bg": "rgba(99,102,241,.15)",
+      "platforms": ["Android"],
+      "url": "#"
+    }
+  ],
   "features": [
     {
       "icon": "⚡",

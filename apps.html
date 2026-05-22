@@ -372,43 +372,20 @@ body:hover .cursor-ring { }
     <a href="contact.html">Reviews</a>
 </div>
 
-<!-- ARION VPN PRODUCT -->
+<!-- APPS GALLERY -->
 <section id="product" class="section">
   <div class="product-wrap">
-    <div class="product-hero">
-      <div class="product-visual reveal-zoom">
-        <div class="shield-ring"></div>
-        <div class="shield-ring"></div>
-        <div class="phone-mockup">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <img src="logo1.png" class="shield-icon" style="width:70px;height:70px;object-fit:contain" alt="VPN App Logo">
-            <div class="vpn-status">● Active</div>
-            <div class="vpn-ip">Arion VPN is running</div>
-          </div>
-          <div class="phone-bar"></div>
-        </div>
-      </div>
-      <div class="product-info reveal-left">
-        <div class="product-badge" id="dynamic-product-badge">🟢 Available Now</div>
-        <h2 id="dynamic-product-h2">Arion <span>VPN</span></h2>
-        <p id="dynamic-product-desc">A flagship application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.</p>
-        <p id="dynamic-product-platforms" style="color:var(--muted);font-size:14px;margin-bottom:24px">Windows • Android</p>
-        <div class="download-btns">
-          <a href="#" class="dl-btn android" id="dynamic-dl-android">
-            <span class="dl-icon">🤖</span>
-            <span class="dl-text"><small>Download for</small><strong>Android</strong></span>
-          </a>
-          <a href="#" class="dl-btn windows" id="dynamic-dl-windows">
-            <span class="dl-icon">🖥️</span>
-            <span class="dl-text"><small>Download for</small><strong>Windows</strong></span>
-          </a>
-        </div>
-        <div style="margin-top:20px;display:flex;gap:18px;font-size:13px;color:var(--muted);">
-          <a href="privacy.html" id="dynamic-privacy-link" style="color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:all 0.3s;cursor:pointer;">Privacy Policy</a>
-          <a href="terms.html" id="dynamic-terms-link" style="color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:all 0.3s;cursor:pointer;">Terms & Conditions</a>
-        </div>
-      </div>
+    
+    <div class="section-center section-header reveal-blur" style="margin-bottom: 50px;">
+      <div class="section-tag">Our Products</div>
+      <h2 class="section-h">Apps <span>Gallery</span></h2>
+      <p class="section-p">Explore our suite of high-performance applications built for Windows and Android.</p>
+    </div>
+    
+    <div class="apps-grid" id="dynamic-apps-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:30px;margin-bottom:70px">
+      <!-- Populated dynamically from API -->
+      <div class="repo-card repo-skeleton" style="height:250px;border-radius:22px"></div>
+      <div class="repo-card repo-skeleton" style="height:250px;border-radius:22px"></div>
     </div>
 
     <!-- Features -->
@@ -529,6 +506,26 @@ async function loadDynamicData() {
       setText('dynamic-about-p2', data.about.p2);
     }
 
+    if (data.apps_gallery) {
+      const appsGrid = document.getElementById('dynamic-apps-grid');
+      if (appsGrid) {
+        appsGrid.innerHTML = data.apps_gallery.map(app => `
+          <div class="repo-card reveal visible" style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="feat-icon" style="background:${app.icon_bg};margin-bottom:0;width:48px;height:48px;font-size:20px;">${app.icon}</div>
+              <span class="product-badge" style="margin-bottom:0;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:#fff;">${app.badge}</span>
+            </div>
+            <h3 style="font-size:20px;margin-bottom:0;">${app.name}</h3>
+            <p style="flex-grow:1;min-height:0;margin-bottom:0;">${app.description}</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+              ${(app.platforms || []).map(plat => `<span class="section-tag" style="margin-bottom:0;padding:3px 10px;font-size:10px;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:var(--muted);">${plat}</span>`).join('')}
+            </div>
+            <a href="${app.url}" class="btn-outline" style="padding:10px 20px;font-size:13px;width:100%;justify-content:center;text-align:center;">View Details</a>
+          </div>
+        `).join('');
+      }
+    }
+    
     if (data.product) {
       const p = data.product;
       setText('dynamic-product-badge', p.badge || '');
