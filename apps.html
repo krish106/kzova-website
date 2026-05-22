@@ -358,7 +358,7 @@ body:hover .cursor-ring { }
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="index.html#about">About</a></li>
+    <li><a href="about.html">About</a></li>
     <li><a href="apps.html">Apps</a></li>
     <li><a href="tech.html">Tech</a></li>
     <li><a href="apps.html#github">Working Projects</a></li>
@@ -371,7 +371,7 @@ body:hover .cursor-ring { }
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
-  <a href="index.html#about">About</a>
+  <a href="about.html">About</a>
   <a href="apps.html">Apps</a>
   <a href="tech.html">Tech</a>
   <a href="apps.html#github">Working Projects</a>
@@ -536,32 +536,36 @@ async function loadDynamicData() {
     if (!res.ok) throw new Error('Failed to load API data');
     const data = await res.json();
     
-    // ── HERO ──
-    document.getElementById('dynamic-hero-tag').innerHTML = '<span class="pulse-dot"></span>' + data.hero.tag;
-    document.getElementById('dynamic-hero-h1-white').textContent = data.hero.h1_white;
-    document.getElementById('dynamic-hero-h1-grad').textContent = data.hero.h1_gradient;
-    document.getElementById('dynamic-hero-p').textContent = data.hero.p;
-    
-    // ── ABOUT ──
-    document.getElementById('dynamic-about-p1').textContent = data.about.p1;
-    document.getElementById('dynamic-about-p2').textContent = data.about.p2;
+    function setHTML(id, val) { const el = document.getElementById(id); if (el) el.innerHTML = val; }
+    function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+    function setHref(id, val) { const el = document.getElementById(id); if (el) el.href = val; }
 
-    // ── PRODUCT ──
-    if (data.product) {
-      const p = data.product;
-      document.getElementById('dynamic-product-badge').textContent = p.badge || '';
-      document.getElementById('dynamic-product-h2').innerHTML = `${p.name || ''} <span>${p.name_highlight || ''}</span>`;
-      document.getElementById('dynamic-product-desc').textContent = p.description || '';
-      document.getElementById('dynamic-product-platforms').textContent = p.platforms || '';
-      document.getElementById('dynamic-dl-android').href = p.download_android_url || '#';
-      document.getElementById('dynamic-dl-windows').href = p.download_windows_url || '#';
-      document.getElementById('dynamic-privacy-link').href = p.privacy_url || 'privacy.html';
-      document.getElementById('dynamic-terms-link').href = p.terms_url || 'terms.html';
+    if (data.hero) {
+      setHTML('dynamic-hero-tag', '<span class="pulse-dot"></span>' + data.hero.tag);
+      setText('dynamic-hero-h1-white', data.hero.h1_white);
+      setText('dynamic-hero-h1-grad', data.hero.h1_gradient);
+      setText('dynamic-hero-p', data.hero.p);
+    }
+    
+    if (data.about) {
+      setText('dynamic-about-p1', data.about.p1);
+      setText('dynamic-about-p2', data.about.p2);
     }
 
-    // ── FEATURES ──
+    if (data.product) {
+      const p = data.product;
+      setText('dynamic-product-badge', p.badge || '');
+      setHTML('dynamic-product-h2', `${p.name || ''} <span>${p.name_highlight || ''}</span>`);
+      setText('dynamic-product-desc', p.description || '');
+      setText('dynamic-product-platforms', p.platforms || '');
+      setHref('dynamic-dl-android', p.download_android_url || '#');
+      setHref('dynamic-dl-windows', p.download_windows_url || '#');
+      setHref('dynamic-privacy-link', p.privacy_url || 'privacy.html');
+      setHref('dynamic-terms-link', p.terms_url || 'terms.html');
+    }
+
     const featGrid = document.getElementById('dynamic-features-grid');
-    if (data.features && data.features.length > 0) {
+    if (featGrid && data.features && data.features.length > 0) {
       featGrid.innerHTML = data.features.map(f => `
         <div class="feature-card reveal visible">
           <div class="feat-icon" style="background:${f.icon_bg || 'rgba(14,165,233,.12)'}">${f.icon || '⚡'}</div>
@@ -571,9 +575,8 @@ async function loadDynamicData() {
       `).join('');
     }
 
-    // ── STATS ──
-    if (data.stats && data.stats.length > 0) {
-      const statsBelt = document.getElementById('stats-belt');
+    const statsBelt = document.getElementById('stats-belt');
+    if (statsBelt && data.stats && data.stats.length > 0) {
       statsBelt.style.display = '';
       statsBelt.className = '';
       statsBelt.setAttribute('id', 'stats-belt');
@@ -583,19 +586,19 @@ async function loadDynamicData() {
       statsBelt.style.padding = '60px';
       statsBelt.style.overflow = 'hidden';
       const statsGrid = document.getElementById('dynamic-stats-grid');
-      statsGrid.innerHTML = data.stats.map(s => `
-        <div class="stat-item">
-          <div class="stat-num" data-target="${s.value}" data-suffix="${s.suffix || '+'}">${s.value}${s.suffix || '+'}</div>
-          <div class="stat-label">${s.label || ''}</div>
-        </div>
-      `).join('');
-      // Re-observe for counter animation
-      document.querySelectorAll('#dynamic-stats-grid .stat-num').forEach(el => co.observe(el));
+      if (statsGrid) {
+        statsGrid.innerHTML = data.stats.map(s => `
+          <div class="stat-item">
+            <div class="stat-num" data-target="${s.value}" data-suffix="${s.suffix || '+'}">${s.value}${s.suffix || '+'}</div>
+            <div class="stat-label">${s.label || ''}</div>
+          </div>
+        `).join('');
+        if (typeof co !== 'undefined') document.querySelectorAll('#dynamic-stats-grid .stat-num').forEach(el => co.observe(el));
+      }
     }
 
-    // ── TECH ──
     const techGrid = document.getElementById('dynamic-tech-grid');
-    if (data.tech && data.tech.length > 0) {
+    if (techGrid && data.tech && data.tech.length > 0) {
       techGrid.innerHTML = data.tech.map(t => `
         <div class="tech-card reveal visible">
           <div class="t-icon">${t.icon || '🔧'}</div>
@@ -605,39 +608,34 @@ async function loadDynamicData() {
       `).join('');
     }
 
-    // ── PROJECTS ──
     const grid = document.getElementById('reposGrid');
-    if (data.projects && data.projects.length > 0) {
-      grid.innerHTML = data.projects.map(r => `
-        <div class="repo-card reveal visible">
-          <h3>📁 ${r.name}</h3>
-          <p>${r.description}</p>
-          <div class="repo-meta">
-            <span><span class="repo-lang" style="background:${r.color || '#0EA5E9'}"></span> ${r.lang}</span>
+    if (grid) {
+      if (data.projects && data.projects.length > 0) {
+        grid.innerHTML = data.projects.map(r => `
+          <div class="repo-card reveal visible">
+            <h3>📁 ${r.name}</h3>
+            <p>${r.description}</p>
+            <div class="repo-meta">
+              <span><span class="repo-lang" style="background:${r.color || '#0EA5E9'}"></span> ${r.lang}</span>
+            </div>
+            <a href="${r.url}" target="_blank" rel="noopener" class="repo-link">View Source →</a>
           </div>
-          <a href="${r.url}" target="_blank" rel="noopener" class="repo-link">View Source →</a>
-        </div>
-      `).join('');
-    } else {
-      grid.innerHTML = '<p>No projects found.</p>';
+        `).join('');
+      } else {
+        grid.innerHTML = '<p>No projects found.</p>';
+      }
     }
 
-    // ── FOOTER ──
     if (data.footer) {
       const ft = data.footer;
-      const ftDesc = document.getElementById('dynamic-footer-desc');
-      if (ftDesc && ft.description) ftDesc.textContent = ft.description;
-      const ftGH = document.getElementById('dynamic-footer-github');
-      if (ftGH && ft.github_url) ftGH.href = ft.github_url;
-      const ftGH2 = document.getElementById('dynamic-footer-github2');
-      if (ftGH2 && ft.github_url) ftGH2.href = ft.github_url;
-      const ftEmail = document.getElementById('dynamic-footer-email');
-      if (ftEmail && ft.email) ftEmail.href = 'mailto:' + ft.email;
-      const ftCopy = document.getElementById('dynamic-footer-copyright');
-      if (ftCopy && ft.copyright) ftCopy.textContent = ft.copyright;
+      setText('dynamic-footer-desc', ft.description);
+      setHref('dynamic-footer-github', ft.github_url);
+      setHref('dynamic-footer-github2', ft.github_url);
+      setHref('dynamic-footer-email', ft.email ? 'mailto:' + ft.email : '#');
+      setText('dynamic-footer-copyright', ft.copyright);
       const ftBuilt = document.getElementById('dynamic-footer-built');
       if (ftBuilt && ft.built_by_text) ftBuilt.innerHTML = `${ft.built_by_text} <a href="${ft.built_by_url || '#'}" target="_blank">${ft.built_by_name || ''}</a>`;
-      // Footer project links
+      
       const ftProjCol = document.getElementById('dynamic-footer-projects-col');
       if (ftProjCol && data.projects) {
         ftProjCol.innerHTML = '<h4>Projects</h4>' + data.projects.map(p => 
