@@ -335,12 +335,6 @@ body:hover .cursor-ring { }
 <div class="cursor-ring" id="cursorRing"></div>
 <div id="scroll-progress"></div>
 
-<!-- Preloader -->
-<div id="preloader">
-  <img src="klogo.png" class="pre-logo-img" alt="Kzova Labs">
-  <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
-  <div class="pre-text">Loading Portfolio</div>
-</div>
 
 <div id="global-bg">
   <canvas id="hero-canvas"></canvas>
@@ -447,18 +441,6 @@ body:hover .cursor-ring { }
 </footer>
 
 <script>
-// Smart Preloader (only runs once per session)
-window.addEventListener('load', () => {
-  const loader = document.getElementById('preloader');
-  if (loader) {
-    if (sessionStorage.getItem('visited')) {
-      loader.classList.add('done');
-    } else {
-      sessionStorage.setItem('visited', 'true');
-      setTimeout(() => loader.classList.add('done'), 1200); // slightly faster premium transition
-    }
-  }
-});
 
 // Cursor
 const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
