@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const port = 3000;
@@ -116,6 +117,35 @@ app.post('/api/reviews', (req, res) => {
         console.error(writeErr);
         return res.status(500).json({ error: 'Failed to save review' });
       }
+      
+      // Email Notification
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'arionvpn1@gmail.com',
+          pass: process.env.EMAIL_PASS
+        }
+      });
+
+      const mailOptions = {
+        from: '"Kzova Reviews" <arionvpn1@gmail.com>',
+        to: 'arionvpn1@gmail.com',
+        subject: `New Review from ${name} (${newReview.rating} Stars)`,
+        text: `You have received a new review!\n\nName: ${name}\nEmail: ${newReview.email || 'N/A'}\nRating: ${newReview.rating}/5\n\nReview:\n${newReview.review}\n\nDate: ${newReview.date}`
+      };
+
+      if (process.env.EMAIL_PASS) {
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error('Error sending email:', error);
+          } else {
+            console.log('Review email sent:', info.response);
+          }
+        });
+      } else {
+        console.warn('Warning: EMAIL_PASS environment variable is not set. Email notification skipped.');
+      }
+
       res.json({ success: true, review: newReview });
     });
   });

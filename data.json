@@ -87,12 +87,7 @@
       "description": "Navigate the entire application without taking your hands off the keyboard, thanks to comprehensive shortcut support."
     }
   ],
-  "stats": [
-    { "value": 5, "suffix": "+", "label": "Apps Built" },
-    { "value": 100, "suffix": "%", "label": "Passion Driven" },
-    { "value": 3, "suffix": "+", "label": "Platforms" },
-    { "value": 24, "suffix": "/7", "label": "Uptime" }
-  ],
+  "stats": [],
   "tech": [
     { "icon": "⚛️", "name": "React", "description": "Web interfaces" },
     { "icon": "⚡", "name": "Electron", "description": "Cross-platform desktop" },
