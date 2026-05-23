@@ -41,7 +41,7 @@ app.use(session({
 }));
 
 // Serve static files from the current directory
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, { extensions: ['html'] }));
 
 // ── Public API: Get data ──
 app.get('/api/data', async (req, res) => {
