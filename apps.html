@@ -666,18 +666,20 @@ function handleReviewSubmit(e){
   btn.innerHTML = '⏳ Submitting...';
   
   const form = e.target;
-  const data = new FormData(form);
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
   
-  // Submit to Formspree (Fallback endpoint for static hosting)
-  fetch("https://formspree.io/f/replace_me_with_your_form_id", {
+  if(!data.rating) data.rating = 5;
+  
+  // Submit to our actual API
+  fetch("/api/reviews", {
     method: "POST",
-    body: data,
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(response => {
-    if (response.ok) {
-      btn.innerHTML = '✓ Message Sent!';
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(response => response.json())
+  .then(result => {
+    if (result.success || result.review) {
+      btn.innerHTML = '✓ Review Sent!';
       btn.style.background = 'linear-gradient(135deg,#10B981,#10B981)';
       form.reset();
     } else {
