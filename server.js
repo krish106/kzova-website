@@ -12,14 +12,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || process.env.MONGODB_URL || process.env.MONGO_URI;
+console.log('Available Env Keys:', Object.keys(process.env).join(', '));
 let client;
 let db;
 
 async function connectDB() {
   if (!uri) {
     console.warn('⚠️ MONGODB_URI is not set. Database features will fail.');
-    return null;
+    return { isConfigError: true, msg: 'MONGODB_URI is literally missing from Render environment variables.' };
   }
   if (!client) {
     client = new MongoClient(uri);
@@ -48,6 +49,7 @@ app.get('/api/data', async (req, res) => {
   try {
     const database = await connectDB();
     if (!database) return res.status(500).json({ error: 'No database connection' });
+    if (database.isConfigError) return res.status(500).json({ error: database.msg });
     
     const dataDoc = await database.collection('siteData').findOne({ _id: 'kzova_data' });
     if (dataDoc && dataDoc.data) {
