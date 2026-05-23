@@ -10,6 +10,9 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
+// Trust Render's reverse proxy for correct IP rate limiting
+app.set('trust proxy', 1);
+
 // Use process.env.PORT for Render deployment
 const port = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
