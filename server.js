@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
 const { MongoClient } = require('mongodb');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 // Use process.env.PORT for Render deployment
@@ -38,14 +40,43 @@ async function connectDB() {
 }
 connectDB().catch(console.error);
 
-app.use(cors({ origin: true, credentials: true }));
-app.use(bodyParser.json({ limit: '5mb' }));
-app.use(session({
+const sessionParser = session({
   secret: 'kzova-admin-secret-key-2026',
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 4 } // 4 hours
+});
+
+app.use(sessionParser);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: true, credentials: true }));
+
+// --- Security Middleware (Layer 2 DDoS & Spam Protection) ---
+
+// 1. HTTP Security Headers
+app.use(helmet({
+  contentSecurityPolicy: false, // Disabled for simplicity, can be enabled later
+  crossOriginEmbedderPolicy: false // Allows loading external fonts/images
 }));
+
+// 2. Rate Limiting for the Reviews API (Max 5 reviews per hour per IP)
+const reviewLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour window
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: { error: 'Too many reviews submitted from this IP, please try again after an hour' },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// 3. Global Rate Limiting for all other routes (Max 1000 requests per 15 minutes)
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // Limit each IP to 1000 requests per `window` (here, per 15 minutes)
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(globalLimiter);
 
 // Serve static files from the current directory
 app.use(express.static(__dirname, { extensions: ['html'] }));
@@ -124,7 +155,7 @@ app.post('/api/data', requireAuth, async (req, res) => {
 });
 
 // ── Public API: Submit review ──
-app.post('/api/reviews', async (req, res) => {
+app.post('/api/reviews', reviewLimiter, async (req, res) => {
   const { name, email, rating, review } = req.body;
   if (!name || !review) {
     return res.status(400).json({ error: 'Name and review are required' });
