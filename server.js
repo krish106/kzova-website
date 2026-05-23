@@ -22,11 +22,17 @@ async function connectDB() {
     console.warn('⚠️ MONGODB_URI is not set. Database features will fail.');
     return { isConfigError: true, msg: 'MONGODB_URI is literally missing from Render environment variables.' };
   }
-  if (!client) {
-    client = new MongoClient(uri);
-    await client.connect();
-    db = client.db('kzova');
-    console.log('✅ Connected to MongoDB');
+  if (!db) {
+    try {
+      client = new MongoClient(uri.replace(/\s+/g, '')); // Remove accidentally pasted spaces/newlines
+      await client.connect();
+      db = client.db('kzova');
+      console.log('✅ Connected to MongoDB');
+    } catch (err) {
+      console.error('MongoDB Connection Error:', err.message);
+      client = null;
+      throw err; // Force the API to catch and return this error
+    }
   }
   return db;
 }
