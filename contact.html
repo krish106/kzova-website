@@ -380,9 +380,9 @@ body:hover .cursor-ring { }
     <h2 class="section-h">Comments & <span>Reviews</span></h2>
     <p class="section-p">Have you used my apps? Share your thoughts and opinions below.</p>
     <form class="contact-form" onsubmit="handleReviewSubmit(event)">
-      <input type="text" placeholder="Your Name" required>
-      <input type="text" placeholder="App Name" required>
-      <input type="email" placeholder="Your Email (Optional)" class="full">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="text" name="appName" placeholder="App Name" required>
+      <input type="email" name="email" placeholder="Your Email (Optional)" class="full">
       <div class="star-rating full">
         <label>Rating:</label>
         <div class="stars">
@@ -393,7 +393,7 @@ body:hover .cursor-ring { }
           <input type="radio" name="rating" id="r1" value="1"><label for="r1">★</label>
         </div>
       </div>
-      <textarea placeholder="Your review..." class="full" rows="5" required></textarea>
+      <textarea name="review" placeholder="Your review..." class="full" rows="5" required></textarea>
       <div class="full" style="text-align:center">
         <button type="submit" class="btn-grad" style="width:100%;max-width:320px;justify-content:center">Submit Review →</button>
       </div>
