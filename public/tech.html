@@ -7,9 +7,9 @@
 <meta name="description" content="Portfolio of Kzova Labs, an independent developer crafting intuitive Windows apps and cross-platform software.">
 <meta property="og:title" content="Kzova Labs — Cross-Platform Developer">
 <meta property="og:description" content="Portfolio of Kzova Labs, an independent developer crafting intuitive Windows apps and cross-platform software.">
-<meta property="og:image" content="logo1.png">
+<meta property="og:image" content="/logo1.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="klogo.png" type="image/png">
+<link rel="icon" href="/klogo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -351,15 +351,15 @@ body:hover .cursor-ring { }
 <!-- Nav -->
 <nav id="nav">
   <a href="/" class="nav-brand">
-    <img src="klogo.png" class="nav-logo-img" alt="K">
+    <img src="/klogo.png" class="nav-logo-img" alt="K">
     <div class="nav-brand-name">zova Labs</div>
   </a>
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/apps">Apps</a></li>
-    <li><a href="/tech">Tech</a></li>
-        <li><a href="/contact">Reviews</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/apps.html">Apps</a></li>
+    <li><a href="/tech.html">Tech</a></li>
+        <li><a href="/contact.html">Reviews</a></li>
   </ul>
 
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -370,10 +370,10 @@ body:hover .cursor-ring { }
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="/">Home</a>
-  <a href="/about">About</a>
-  <a href="/apps">Apps</a>
-  <a href="/tech">Tech</a>
-    <a href="/contact">Reviews</a>
+  <a href="/about.html">About</a>
+  <a href="/apps.html">Apps</a>
+  <a href="/tech.html">Tech</a>
+    <a href="/contact.html">Reviews</a>
 </div>
 
 <!-- TECH STACK -->
@@ -395,7 +395,7 @@ body:hover .cursor-ring { }
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="nav-brand" style="margin-bottom:16px;width:fit-content;gap:3px;pointer-events:none;">
-        <img src="klogo.png" class="nav-logo-img" alt="K" style="margin:0">
+        <img src="/klogo.png" class="nav-logo-img" alt="K" style="margin:0">
         <div class="nav-brand-name" style="font-size:24px;">zova Labs</div>
       </div>
       <p id="dynamic-footer-desc">Kzova Labs is an independent software development studio building high-quality Windows and cross-platform applications.</p>
@@ -406,15 +406,15 @@ body:hover .cursor-ring { }
     </div>
     <div class="footer-col">
       <h4>Portfolio</h4>
-      <a href="/apps">Apps</a>
-      <a href="/tech">Tech Stack</a>
+      <a href="/apps.html">Apps</a>
+      <a href="/tech.html">Tech Stack</a>
           </div>
     <div class="footer-col">
       <h4>Connect</h4>
-      <a href="/about">About Me</a>
-      <a href="/contact">Reviews</a>
+      <a href="/about.html">About Me</a>
+      <a href="/contact.html">Reviews</a>
       <a href="https://github.com/krish106" id="dynamic-footer-github2" target="_blank">GitHub</a>
-      <a href="#">Privacy Policy</a>
+      <a href="/privacy.html">Privacy Policy</a>
     </div>
     
   </div>
@@ -471,7 +471,7 @@ function ap(){cx.clearRect(0,0,cv.width,cv.height);pts.forEach(p=>{p.update();p.
 // Load Dynamic Data
 async function loadDynamicData() {
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('/data.json');
     if (!res.ok) throw new Error('Failed to load API data');
     const data = await res.json();
     
@@ -519,8 +519,8 @@ async function loadDynamicData() {
       setText('dynamic-product-platforms', p.platforms || '');
       setHref('dynamic-dl-android', p.download_android_url || '#');
       setHref('dynamic-dl-windows', p.download_windows_url || '#');
-      setHref('dynamic-privacy-link', p.privacy_url || 'privacy.html');
-      setHref('dynamic-terms-link', p.terms_url || 'terms.html');
+      setHref('dynamic-privacy-link', p.privacy_url || '/privacy.html');
+      setHref('dynamic-terms-link', p.terms_url || '/terms.html');
     }
 
     const featGrid = document.getElementById('dynamic-features-grid');
@@ -621,30 +621,13 @@ function handleReviewSubmit(e){
   
   if(!data.rating) data.rating = 5;
   
-  // Submit to our actual API
-  fetch("/api/reviews", {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).then(response => response.json())
-  .then(result => {
-    if (result.success || result.review) {
-      btn.innerHTML = '✓ Review Sent!';
-      btn.style.background = 'linear-gradient(135deg,#10B981,#10B981)';
-      form.reset();
-    } else {
-      btn.innerHTML = '❌ Error Submitting';
-      btn.style.background = 'linear-gradient(135deg,#EF4444,#EF4444)';
-    }
-  }).catch(error => {
-    btn.innerHTML = '❌ Error Submitting';
-    btn.style.background = 'linear-gradient(135deg,#EF4444,#EF4444)';
-  }).finally(() => {
-    setTimeout(()=>{
-      btn.innerHTML = og;
-      btn.style.background = '';
-    }, 3000);
-  });
+  // Static Cloudflare hosting does not run the old Express reviews API yet.
+  btn.innerHTML = 'Review form is temporarily offline';
+  btn.style.background = 'linear-gradient(135deg,#0EA5E9,#10B981)';
+  setTimeout(()=>{
+    btn.innerHTML = og;
+    btn.style.background = '';
+  }, 3000);
 }
 
 // Smooth scroll
@@ -655,7 +638,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 </script>
-<script src="router.js"></script>
+<script src="/router.js"></script>
 </body>
 </html>
 

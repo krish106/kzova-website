@@ -139,7 +139,8 @@ function updateNavActive(url) {
   const cleanUrl = url.split('/').pop() || 'index.html';
   document.querySelectorAll('#nav a, .mobile-menu a').forEach(a => {
     const href = a.getAttribute('href');
-    if (href && href.startsWith(cleanUrl)) {
+    const cleanHref = href ? href.split('/').pop() || 'index.html' : '';
+    if (cleanHref === cleanUrl) {
       a.classList.add('active');
     } else {
       a.classList.remove('active');
