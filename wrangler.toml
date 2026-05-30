@@ -1,0 +1,5 @@
+name = "kzova-labs"
+compatibility_date = "2026-05-30"
+
+[assets]
+directory = "./public"

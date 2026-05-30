@@ -1,0 +1,115 @@
+{
+  "hero": {
+    "tag": "Kzova Studio",
+    "h1_white": "Crafting Beautiful",
+    "h1_gradient": "Digital Experiences.",
+    "p": "Hi, I'm Krish. I build intuitive, high-performance software for Windows and Android. Let's make something amazing together."
+  },
+  "about": {
+    "p1": "I am an independent software developer passionate about building high-quality, user-respecting digital products. I believe that software should be beautiful, fast, and accessible everywhere.",
+    "p2": "Whether it's native Windows applications that feel right at home on Windows, or cross-platform utilities that bridge the gap between devices, I focus on delivering seamless experiences with clean code and modern architecture."
+  },
+  "product": {
+    "name": "Arion",
+    "name_highlight": "VPN",
+    "badge": "🟢 Available Now",
+    "description": "A flagship application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.",
+    "platforms": "Windows • Android",
+    "download_android_url": "#",
+    "download_windows_url": "#",
+    "privacy_url": "privacy.html",
+    "terms_url": "terms.html"
+  },
+  "apps_gallery": [
+    {
+      "name": "Arion VPN",
+      "badge": "🟢 Active",
+      "description": "A flagship VPN application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.",
+      "icon": "🛡️",
+      "icon_bg": "rgba(16,185,129,.15)",
+      "platforms": ["Android", "Windows"],
+      "url": "#"
+    },
+    {
+      "name": "Core-Inventory",
+      "badge": "🔵 Beta",
+      "description": "A comprehensive core inventory management application for small to medium businesses.",
+      "icon": "📦",
+      "icon_bg": "rgba(14,165,233,.15)",
+      "platforms": ["Web", "Windows"],
+      "url": "#"
+    },
+    {
+      "name": "InTune",
+      "badge": "✨ New",
+      "description": "A custom tailored music experience with seamless playback and intuitive design.",
+      "icon": "🎵",
+      "icon_bg": "rgba(99,102,241,.15)",
+      "platforms": ["Android"],
+      "url": "#"
+    }
+  ],
+  "features": [
+    {
+      "icon": "⚡",
+      "icon_bg": "rgba(255,107,107,.12)",
+      "title": "Lightning Fast",
+      "description": "Optimized for modern architectures and processors, ensuring your tasks complete in milliseconds, not seconds."
+    },
+    {
+      "icon": "📱",
+      "icon_bg": "rgba(16,185,129,.12)",
+      "title": "Responsive UI",
+      "description": "A fluid interface that adapts to your screen size and workflow seamlessly, built with modern web and native components."
+    },
+    {
+      "icon": "☁️",
+      "icon_bg": "rgba(14,165,233,.12)",
+      "title": "Cloud Sync",
+      "description": "Your data synchronizes automatically across all your devices in real-time, keeping you productive everywhere."
+    },
+    {
+      "icon": "🔒",
+      "icon_bg": "rgba(0,230,118,.12)",
+      "title": "Secure by Design",
+      "description": "Your data is encrypted locally before touching any server. We prioritize your privacy above all else."
+    },
+    {
+      "icon": "🌙",
+      "icon_bg": "rgba(255,107,157,.12)",
+      "title": "Dark Mode",
+      "description": "A beautifully crafted dark mode that is easy on the eyes and integrates perfectly with system preferences."
+    },
+    {
+      "icon": "⌨️",
+      "icon_bg": "linear-gradient(135deg,rgba(14,165,233,.15),rgba(16,185,129,.15))",
+      "title": "Shortcuts",
+      "description": "Navigate the entire application without taking your hands off the keyboard, thanks to comprehensive shortcut support."
+    }
+  ],
+  "stats": [],
+  "tech": [
+    { "icon": "⚛️", "name": "React", "description": "Web interfaces" },
+    { "icon": "⚡", "name": "Electron", "description": "Cross-platform desktop" },
+    { "icon": "🟦", "name": "C#", "description": "Native Windows apps" },
+    { "icon": "🐍", "name": "Python", "description": "Backend & scripting" },
+    { "icon": "🎨", "name": "Figma", "description": "UI/UX Design" },
+    { "icon": "🗄️", "name": "Node.js", "description": "Server runtimes" },
+    { "icon": "📱", "name": "React Native", "description": "Mobile applications" },
+    { "icon": "📦", "name": "Git", "description": "Version control" }
+  ],
+  "projects": [],
+  "footer": {
+    "description": "Kzova Labs is an independent software development studio building high-quality Windows and cross-platform applications.",
+    "github_url": "https://github.com/krish106",
+    "email": "contact@example.com",
+    "copyright": "© 2026 Kzova Labs. All rights reserved.",
+    "built_by_text": "Built by",
+    "built_by_name": "Kzova Labs",
+    "built_by_url": "https://github.com/krish106"
+  },
+  "legal": {
+    "privacy_content": "<h2>1. Introduction</h2>\n<p>Welcome to Arion VPN. We respect your privacy and are committed to protecting it. This Privacy Policy explains our practices regarding the collection, use, and disclosure of information when you use our mobile application (the \"App\").</p>\n\n<h2>2. No Logs Policy</h2>\n<p>Arion VPN operates under a strict <strong>No-Logs Policy</strong>. We do <strong>not</strong> collect, store, or share any of the following data:</p>\n<ul style=\"color: #94a3b8; font-size: 15px; margin-bottom: 16px; line-height: 1.8;\">\n  <li>IP Addresses (Local or VPN-assigned)</li>\n  <li>Browsing History</li>\n  <li>Traffic Destination or Metadata</li>\n  <li>DNS Queries</li>\n  <li>Connection Timestamps or Session Durations</li>\n</ul>\n\n<h2>3. Data We Do Not Collect</h2>\n<p>We do not require you to create an account, provide an email address, or provide any personal identification to use the core features of the App.</p>\n\n<h2>4. Third-Party Services</h2>\n<p>The App utilizes the public <strong>SoftEther and VPNGate</strong> volunteer network. While we do not log your data, volunteer servers are operated by third parties. By using the App, you acknowledge that you are routing your traffic through public infrastructure.</p>\n<p>We use <strong>Google AdMob</strong> to provide advertisements that keep the App free. AdMob may collect certain device information (such as Advertising IDs) to serve personalized ads. You can opt out of personalized ads through your device settings.</p>\n<ul style=\"color: #94a3b8; font-size: 15px; margin-bottom: 16px; line-height: 1.8;\">\n  <li>Google Privacy Policy: <a href=\"https://policies.google.com/privacy\" target=\"_blank\">https://policies.google.com/privacy</a></li>\n</ul>\n\n<h2>5. Changes to This Privacy Policy</h2>\n<p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>\n\n<h2>6. Contact Us</h2>\n<p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.</p>",
+    "terms_content": "<h2>1. Acceptance of Terms</h2>\n<p>By downloading, installing, or using Arion VPN, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, do not use the application.</p>\n\n<h2>2. Acceptable Use</h2>\n<p>You agree to use Arion VPN for lawful purposes only. You must not use our service to transmit illegal material, engage in fraudulent activities, or intentionally bypass or harm our network infrastructure.</p>\n\n<h2>3. Account Security</h2>\n<p>You are responsible for maintaining the confidentiality of your account credentials. Arion VPN is not liable for any unauthorized access that occurs due to your failure to secure your account.</p>\n\n<h2>4. Limitation of Liability</h2>\n<p>Arion VPN is provided \"as is\" without warranties of any kind. We do not guarantee uninterrupted service and are not liable for any data loss, financial loss, or damages resulting from your use of the service.</p>\n\n<h2>5. Termination</h2>\n<p>We reserve the right to suspend or terminate your access to Arion VPN at our sole discretion if we believe you have violated these Terms and Conditions.</p>"
+  }
+}
