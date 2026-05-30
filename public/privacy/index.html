@@ -1,167 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Privacy Policy — Arion VPN</title>
-<meta name="description" content="Privacy Policy for Arion VPN. We believe in strict no-logs and absolute transparency.">
-<link rel="icon" href="/klogo.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --primary:#0EA5E9;--secondary:#10B981;
-  --bg:#030712;--bg2:#0B1120;--card:rgba(255,255,255,0.035);
-  --border:rgba(255,255,255,0.07);--border-glow:rgba(14,165,233,0.35);
-  --text:#FFFFFF;--muted:rgba(255,255,255,0.55);
-  --grad1:linear-gradient(135deg,#0EA5E9,#10B981);
-}
-body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:#030712}
-::-webkit-scrollbar-thumb{background:var(--grad1);border-radius:3px}
-
-/* Nav */
-#nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 60px;height:74px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,15,.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:all .4s}
-#nav.scrolled{height:62px;background:rgba(6,6,15,.95);border-bottom-color:var(--border-glow)}
-.nav-brand{display:flex;align-items:center;gap:3px;padding-left:6px;text-decoration:none;}
-.nav-logo-img{width:42px;height:42px;object-fit:contain;}
-.nav-brand-name{font-size:22px;font-weight:800;font-family:'Space Grotesk',sans-serif;color:#fff;}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;}
-.nav-links a:hover{color:#fff}
-
-/* Content */
-.content-wrapper {
-  max-width: 800px;
-  margin: 140px auto 100px;
-  padding: 0 24px;
-}
-.header-tag {
-  display:inline-block;padding:5px 16px;background:rgba(14,165,233,.12);
-  border:1px solid rgba(14,165,233,.28);border-radius:20px;font-size:12px;
-  font-weight:700;color:#9D92FF;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;
-}
-h1 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 900;
-  margin-bottom: 24px;
-}
-h1 span {
-  background: var(--grad1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.last-updated {
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 40px;
-}
-.policy-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 24px;
-}
-.policy-section h2 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 20px;
-  margin-bottom: 16px;
-  color: #fff;
-}
-.policy-section p {
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.8;
-  margin-bottom: 16px;
-}
-.policy-section ul {
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.8;
-  padding-left: 20px;
-  margin-bottom: 16px;
-}
-
-@media(max-width: 768px) {
-  #nav{padding:0 20px;}
-  .nav-links{display:none;}
-  .content-wrapper{margin-top: 100px;}
-  .policy-section{padding: 24px;}
-}
-</style>
-<link rel="stylesheet" href="/site-redesign.css?v=20260531-arion3d">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy - Arion VPN</title>
+  <meta name="description" content="Privacy Policy for Arion VPN by Kzova Labs.">
+  <meta property="og:title" content="Privacy Policy - Arion VPN">
+  <meta property="og:description" content="How Arion VPN handles privacy, ads, public VPN infrastructure, and no-logs commitments.">
+  <meta property="og:image" content="/arion-logo.png">
+  <meta name="theme-color" content="#050706">
+  <link rel="icon" href="/klogo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20260531-fresh1">
 </head>
-<body>
+<body data-page="privacy">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="/"><img src="/klogo.png" alt=""><span>Kzova Labs</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/apps.html">Products</a>
+        <a href="/about.html">Company</a>
+        <a href="/tech.html">Technology</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="/apps.html">Products</a>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+    <div class="mobile-panel" data-mobile-panel>
+      <a href="/">Home</a>
+      <a href="/apps.html">Products</a>
+      <a href="/about.html">Company</a>
+      <a href="/tech.html">Technology</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </header>
 
-<nav id="nav">
-  <a href="/" class="nav-brand">
-    <img src="/klogo.png" class="nav-logo-img" alt="K">
-    <div class="nav-brand-name">zova Labs</div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/about.html">About</a></li>
-    <li><a href="/apps.html">Apps</a></li>
-  </ul>
-</nav>
+  <main id="main">
+    <section class="site-shell page-hero">
+      <span class="eyebrow">Legal</span>
+      <h1>Privacy Policy for <span class="gradient-text">Arion VPN.</span></h1>
+      <p>Last updated: May 31, 2026. This page explains how Arion VPN by Kzova Labs handles privacy, advertising, and public VPN infrastructure.</p>
+    </section>
 
-<div class="content-wrapper">
-  <div class="header-tag">Legal</div>
-  <h1>Privacy <span>Policy</span></h1>
-  <div class="last-updated">Last Updated: May 2026</div>
+    <section class="site-shell section legal-layout">
+      <aside class="legal-nav" aria-label="Privacy sections">
+        <a href="#no-logs">No logs</a>
+        <a href="#data">Data we process</a>
+        <a href="#ads">Ads and consent</a>
+        <a href="#network">Public VPN network</a>
+        <a href="#contact">Contact</a>
+      </aside>
+      <article class="legal-doc">
+        <h2 id="no-logs">1. No-logs policy</h2>
+        <p>Arion VPN does not collect or store browsing history, traffic destinations, DNS queries, VPN session logs, or the content of your internet traffic.</p>
 
-  <div class="policy-section">
-    <h2>1. Introduction</h2>
-    <p>Welcome to Arion VPN (the "App"), developed by Kzova Labs. Your privacy is critically important to us. This Privacy Policy details what information we collect, how we use it, and your rights regarding your personal data when you use our service.</p>
-  </div>
+        <h2 id="data">2. Data we process</h2>
+        <p>The app may process basic app state on your device, such as selected server, connection state, premium time balance, reward state, and app settings. This information is used to operate the app experience.</p>
+        <p>The backend may receive technical route health signals such as failed server identifiers so unhealthy routes can be temporarily penalized. These signals are used for server quality and are not used to track browsing activity.</p>
 
-  <div class="policy-section">
-    <h2>2. Strict No-Logs Policy</h2>
-    <p>We are firmly committed to a strict no-logs policy. When you use the Arion VPN service, we <strong>DO NOT</strong> collect, store, or share any of the following data:</p>
-    <ul>
-      <li>Browsing history or websites you visit</li>
-      <li>DNS queries</li>
-      <li>Your actual IP address or the VPN IP address assigned to you</li>
-      <li>Connection timestamps or session durations</li>
-      <li>The content of your data traffic</li>
-    </ul>
-    <p>Because we do not collect this information, we cannot share it with any third parties, including government entities.</p>
-  </div>
+        <h2 id="ads">3. Ads and consent</h2>
+        <p>Arion VPN uses Google AdMob to keep the app free. AdMob may process device identifiers and advertising signals according to Google's policies. In regions that require consent, the app should present privacy and consent options before personalized ads are used.</p>
+        <p>Rewarded ads are optional and provide Time Bank Boost minutes. The app should not give premium reward if a rewarded ad fails or is not completed.</p>
 
-  <div class="policy-section">
-    <h2>3. Android VpnService API Usage</h2>
-    <p>Arion VPN uses the Android <code>VpnService</code> API as its core functionality. The VpnService is used exclusively to create a secure, device-level encrypted tunnel to our relay servers. This encrypts your traffic to protect it from local network interception. The traffic routed through the VpnService is not logged, inspected, or recorded by us.</p>
-  </div>
+        <h2 id="network">4. Public VPN infrastructure</h2>
+        <p>Arion VPN may use public volunteer VPN infrastructure such as SoftEther and VPN Gate. These servers are operated by third parties, not Kzova Labs. While Kzova Labs does not log your browsing activity, third-party server operators may have their own systems and policies.</p>
 
-  <div class="policy-section">
-    <h2>4. Advertising and Analytics</h2>
-    <p>Our app is provided for free and is supported by advertisements. We use Google AdMob to display ads.</p>
-    <p>To serve ads and analyze app performance, our advertising partners (like Google) may collect anonymized, non-personally identifiable information, including:</p>
-    <ul>
-      <li>Advertising ID (Google Play Services ID)</li>
-      <li>Device model and OS version</li>
-      <li>Approximate geographical location (country level) for relevant ad serving</li>
-    </ul>
-    <p>You may opt-out of personalized advertising through your Android device's privacy settings or via the GDPR/CCPA consent form presented when you open the app (if applicable in your region).</p>
-  </div>
+        <h2>5. Children</h2>
+        <p>Arion VPN is not designed to knowingly collect personal information from children. If you believe a child provided personal information, contact us so we can review the issue.</p>
 
-  <div class="policy-section">
-    <h2>5. Third-Party Servers (SoftEther/VPNGate)</h2>
-    <p>Arion VPN routes your traffic through volunteer-operated relay servers provided by the SoftEther VPN / VPNGate academic project. While we enforce strict encryption, we do not own or manage these volunteer servers. Please refer to the VPNGate project policies regarding their network operations.</p>
-  </div>
+        <h2>6. Changes</h2>
+        <p>We may update this policy when app features, legal requirements, or third-party services change. The updated version will be posted on this page.</p>
 
-  <div class="policy-section">
-    <h2>6. Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
-    <p>Email: contact@kzovalabs.com</p>
-  </div>
+        <h2 id="contact">7. Contact</h2>
+        <p>For privacy questions, contact Kzova Labs at contact@kzovalabs.com.</p>
+      </article>
+    </section>
+  </main>
 
-</div>
-
+  <footer class="site-footer">
+    <div class="site-shell footer-grid">
+      <div><div class="footer-brand"><img src="/klogo.png" alt=""><span>Kzova Labs</span></div><p>Independent software studio building Arion VPN and Windows software.</p></div>
+      <div class="footer-links"><strong>Products</strong><a href="/apps.html">Arion VPN</a><a href="/apps.html#windows-software">Windows Software</a><a href="/tech.html">Technology</a></div>
+      <div class="footer-links"><strong>Company</strong><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/terms.html">Terms</a></div>
+    </div>
+    <div class="site-shell footer-bottom"><span>© <span data-year></span> Kzova Labs. All rights reserved.</span><span>Arion VPN and Windows Software</span></div>
+  </footer>
+  <script src="/app.js?v=20260531-fresh1"></script>
 </body>
 </html>

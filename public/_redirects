@@ -1,2 +1,3 @@
-# Clean URLs are served from the matching /page/index.html files.
-# Do not rewrite /apps to /apps.html; Cloudflare Pages can otherwise loop.
+/app /apps.html 200
+/arion /apps.html 200
+/arion-vpn /apps.html 200

@@ -1,48 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms & Conditions - Arion VPN</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms and Conditions - Arion VPN</title>
+  <meta name="description" content="Terms and Conditions for Arion VPN by Kzova Labs.">
+  <meta property="og:title" content="Terms and Conditions - Arion VPN">
+  <meta property="og:description" content="Terms for using Arion VPN by Kzova Labs.">
+  <meta property="og:image" content="/arion-logo.png">
+  <meta name="theme-color" content="#050706">
   <link rel="icon" href="/klogo.png" type="image/png">
-  <style>
-    body { background: #06060f; color: #fff; font-family: 'Inter', sans-serif; padding: 60px 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; }
-    h1 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; margin-bottom: 20px; color: #0ea5e9; }
-    h2 { font-size: 20px; margin-top: 30px; margin-bottom: 10px; color: #fff; }
-    p { color: #94a3b8; font-size: 15px; margin-bottom: 16px; }
-    a { color: #0ea5e9; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .back-btn { display: inline-block; margin-bottom: 40px; color: #94a3b8; text-decoration: none; }
-  </style>
-<link rel="stylesheet" href="/site-redesign.css?v=20260531-arion3d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20260531-fresh1">
 </head>
-<body>
-  <a href="/#product" onclick="if(document.referrer.includes(window.location.host)) { window.history.back(); return false; }" class="back-btn">← Back to Home</a>
-  <h1>Terms & Conditions</h1>
-  <p>Last updated: May 2026</p>
-  
-  <div id="dynamic-terms-content">
-    <p>Loading Terms & Conditions...</p>
-  </div>
+<body data-page="terms">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="/"><img src="/klogo.png" alt=""><span>Kzova Labs</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/apps.html">Products</a>
+        <a href="/about.html">Company</a>
+        <a href="/tech.html">Technology</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="/privacy.html">Privacy</a>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+    <div class="mobile-panel" data-mobile-panel>
+      <a href="/">Home</a>
+      <a href="/apps.html">Products</a>
+      <a href="/about.html">Company</a>
+      <a href="/tech.html">Technology</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </header>
 
-  <script>
-    async function loadLegalData() {
-      try {
-        const res = await fetch('/data.json');
-        if (!res.ok) throw new Error('Failed to load API data');
-        const data = await res.json();
-        
-        if (data.legal && data.legal.terms_content) {
-          document.getElementById('dynamic-terms-content').innerHTML = data.legal.terms_content;
-        } else {
-          document.getElementById('dynamic-terms-content').innerHTML = '<p>Terms and conditions content not found.</p>';
-        }
-      } catch(e) {
-        console.error(e);
-        document.getElementById('dynamic-terms-content').innerHTML = '<p>Error loading terms and conditions.</p>';
-      }
-    }
-    loadLegalData();
-  </script>
+  <main id="main">
+    <section class="site-shell page-hero">
+      <span class="eyebrow">Legal</span>
+      <h1>Terms and Conditions for <span class="gradient-text">Arion VPN.</span></h1>
+      <p>Last updated: May 31, 2026. These terms explain the conditions for using Arion VPN and the Kzova Labs website.</p>
+    </section>
+
+    <section class="site-shell section legal-layout">
+      <aside class="legal-nav" aria-label="Terms sections">
+        <a href="#acceptance">Acceptance</a>
+        <a href="#use">Acceptable use</a>
+        <a href="#service">Service availability</a>
+        <a href="#rewards">Rewards</a>
+        <a href="#liability">Liability</a>
+      </aside>
+      <article class="legal-doc">
+        <h2 id="acceptance">1. Acceptance</h2>
+        <p>By downloading, installing, accessing, or using Arion VPN, you agree to these Terms and Conditions. If you do not agree, do not use the app.</p>
+
+        <h2 id="use">2. Acceptable use</h2>
+        <p>You agree to use Arion VPN only for lawful purposes. You must not use the app to harm others, distribute illegal material, attack networks, commit fraud, or violate applicable laws.</p>
+
+        <h2 id="service">3. Service availability</h2>
+        <p>Arion VPN may use public volunteer VPN infrastructure operated by third parties. Kzova Labs does not guarantee that every server, route, country, speed, or connection attempt will work at all times.</p>
+
+        <h2 id="rewards">4. Rewarded premium time</h2>
+        <p>Arion VPN may provide premium routing time through rewarded ads. Rewards are app features, not paid subscriptions. A reward may require successful ad completion and may be limited by daily caps, availability, region, device state, or fraud protection.</p>
+
+        <h2>5. Ads and third-party services</h2>
+        <p>The app may use third-party services such as Google AdMob. Those services may operate under their own terms and privacy policies.</p>
+
+        <h2 id="liability">6. Limitation of liability</h2>
+        <p>Arion VPN is provided as is. Kzova Labs is not responsible for damages, losses, blocked routes, third-party server behavior, connection failures, or misuse of the app.</p>
+
+        <h2>7. Changes</h2>
+        <p>Kzova Labs may update these terms. Continued use of Arion VPN after updates means you accept the revised terms.</p>
+
+        <h2>8. Contact</h2>
+        <p>For terms questions, contact Kzova Labs at contact@kzovalabs.com.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell footer-grid">
+      <div><div class="footer-brand"><img src="/klogo.png" alt=""><span>Kzova Labs</span></div><p>Independent software studio building Arion VPN and Windows software.</p></div>
+      <div class="footer-links"><strong>Products</strong><a href="/apps.html">Arion VPN</a><a href="/apps.html#windows-software">Windows Software</a><a href="/tech.html">Technology</a></div>
+      <div class="footer-links"><strong>Company</strong><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/terms.html">Terms</a></div>
+    </div>
+    <div class="site-shell footer-bottom"><span>© <span data-year></span> Kzova Labs. All rights reserved.</span><span>Arion VPN and Windows Software</span></div>
+  </footer>
+  <script src="/app.js?v=20260531-fresh1"></script>
 </body>
 </html>

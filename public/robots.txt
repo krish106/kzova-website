@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /api/
+Disallow: /admin.html
 
 Sitemap: https://kzovalabs.com/sitemap.xml
