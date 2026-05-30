@@ -3,18 +3,18 @@
     "tag": "Kzova Studio",
     "h1_white": "Crafting Beautiful",
     "h1_gradient": "Digital Experiences.",
-    "p": "Hi, I'm Krish. I build intuitive, high-performance software for Windows and Android. Let's make something amazing together."
+    "p": "Hi, I'm Krish. I build privacy-focused Android software. My current app is Arion VPN, built for fast access, smart routing, and a clean user experience."
   },
   "about": {
-    "p1": "I am an independent software developer passionate about building high-quality, user-respecting digital products. I believe that software should be beautiful, fast, and accessible everywhere.",
-    "p2": "Whether it's native Windows applications that feel right at home on Windows, or cross-platform utilities that bridge the gap between devices, I focus on delivering seamless experiences with clean code and modern architecture."
+    "p1": "I am an independent software developer focused on Arion VPN, a privacy-focused Android VPN app. I believe software should be beautiful, fast, and respectful of users.",
+    "p2": "Right now, Kzova Labs is focused on Arion VPN: an Android VPN experience with smart server selection, route optimization, and clear connection insights."
   },
   "product": {
     "name": "Arion",
     "name_highlight": "VPN",
     "badge": "🟢 Available Now",
-    "description": "A flagship application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.",
-    "platforms": "Windows • Android",
+    "description": "A privacy-focused Android VPN app built for fast access, smart server selection, route optimization, and clear connection insights.",
+    "platforms": "Android",
     "download_android_url": "#",
     "download_windows_url": "#",
     "privacy_url": "privacy.html",
@@ -24,83 +24,65 @@
     {
       "name": "Arion VPN",
       "badge": "🟢 Active",
-      "description": "A flagship VPN application showcasing the best of native performance and cross-platform design. Built to be intuitive, fast, and secure.",
+      "description": "A privacy-focused Android VPN app with Smart Route, Best Server Mode, Route Boost, and connection metrics.",
       "icon": "🛡️",
       "icon_bg": "rgba(16,185,129,.15)",
-      "platforms": ["Android", "Windows"],
-      "url": "#"
-    },
-    {
-      "name": "Core-Inventory",
-      "badge": "🔵 Beta",
-      "description": "A comprehensive core inventory management application for small to medium businesses.",
-      "icon": "📦",
-      "icon_bg": "rgba(14,165,233,.15)",
-      "platforms": ["Web", "Windows"],
-      "url": "#"
-    },
-    {
-      "name": "InTune",
-      "badge": "✨ New",
-      "description": "A custom tailored music experience with seamless playback and intuitive design.",
-      "icon": "🎵",
-      "icon_bg": "rgba(99,102,241,.15)",
       "platforms": ["Android"],
       "url": "#"
     }
   ],
   "features": [
     {
-      "icon": "⚡",
+      "icon": "🧭",
       "icon_bg": "rgba(255,107,107,.12)",
-      "title": "Lightning Fast",
-      "description": "Optimized for modern architectures and processors, ensuring your tasks complete in milliseconds, not seconds."
+      "title": "Smart Route",
+      "description": "Chooses from healthy VPN servers instead of blindly sending every user to the same endpoint."
     },
     {
-      "icon": "📱",
+      "icon": "🎯",
       "icon_bg": "rgba(16,185,129,.12)",
-      "title": "Responsive UI",
-      "description": "A fluid interface that adapts to your screen size and workflow seamlessly, built with modern web and native components."
+      "title": "Best Server Mode",
+      "description": "Filters noisy server lists and highlights better options using speed, ping, uptime, and recent health."
     },
     {
-      "icon": "☁️",
+      "icon": "🚀",
       "icon_bg": "rgba(14,165,233,.12)",
-      "title": "Cloud Sync",
-      "description": "Your data synchronizes automatically across all your devices in real-time, keeping you productive everywhere."
+      "title": "Route Boost",
+      "description": "Keeps the connection flow simple and retries better candidates when the first server does not connect."
     },
     {
       "icon": "🔒",
       "icon_bg": "rgba(0,230,118,.12)",
-      "title": "Secure by Design",
-      "description": "Your data is encrypted locally before touching any server. We prioritize your privacy above all else."
+      "title": "Privacy First",
+      "description": "Built around Android VpnService with a no-logs policy and clear privacy information for users."
     },
     {
-      "icon": "🌙",
+      "icon": "⏱️",
       "icon_bg": "rgba(255,107,157,.12)",
-      "title": "Dark Mode",
-      "description": "A beautifully crafted dark mode that is easy on the eyes and integrates perfectly with system preferences."
+      "title": "Time Bank Boost",
+      "description": "Lets users earn and stack premium routing time through clear rewarded-ad value exchange."
     },
     {
-      "icon": "⌨️",
+      "icon": "📊",
       "icon_bg": "linear-gradient(135deg,rgba(14,165,233,.15),rgba(16,185,129,.15))",
-      "title": "Shortcuts",
-      "description": "Navigate the entire application without taking your hands off the keyboard, thanks to comprehensive shortcut support."
+      "title": "Connection Metrics",
+      "description": "Shows connection state, data usage, ping, and server identity in a clean dashboard."
     }
   ],
   "stats": [],
   "tech": [
-    { "icon": "⚛️", "name": "React", "description": "Web interfaces" },
-    { "icon": "⚡", "name": "Electron", "description": "Cross-platform desktop" },
-    { "icon": "🟦", "name": "C#", "description": "Native Windows apps" },
-    { "icon": "🐍", "name": "Python", "description": "Backend & scripting" },
-    { "icon": "🎨", "name": "Figma", "description": "UI/UX Design" },
-    { "icon": "🗄️", "name": "Node.js", "description": "Server runtimes" },
-    { "icon": "📱", "name": "React Native", "description": "Mobile applications" },
+    { "icon": "💙", "name": "Flutter", "description": "Android app UI" },
+    { "icon": "🎯", "name": "Dart", "description": "App logic" },
+    { "icon": "🤖", "name": "Android", "description": "VpnService platform" },
+    { "icon": "🗄️", "name": "Node.js", "description": "Server routing API" },
+    { "icon": "📊", "name": "AdMob", "description": "Rewarded monetization" },
+    { "icon": "🔐", "name": "Secure Storage", "description": "Local app state" },
+    { "icon": "🎨", "name": "Figma", "description": "UI/UX design" },
     { "icon": "📦", "name": "Git", "description": "Version control" }
   ],
   "projects": [],
   "footer": {
-    "description": "Kzova Labs is an independent software development studio building high-quality Windows and cross-platform applications.",
+    "description": "Kzova Labs is an independent software studio currently focused on Arion VPN for Android.",
     "github_url": "https://github.com/krish106",
     "email": "contact@example.com",
     "copyright": "© 2026 Kzova Labs. All rights reserved.",
