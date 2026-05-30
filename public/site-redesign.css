@@ -627,7 +627,6 @@ body::before {
 }
 
 .pre-logo-img,
-.nav-logo-img,
 .about-logo-img,
 .phone-screen .shield-icon {
   display: none !important;
@@ -645,8 +644,19 @@ body::before {
 }
 
 .nav-brand {
-  gap: 0;
+  gap: 2px;
   padding-left: 0;
+}
+
+.nav-brand .nav-logo-img {
+  display: block !important;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(79, 140, 255, 0.28));
 }
 
 .nav-brand-name {
@@ -654,7 +664,7 @@ body::before {
 }
 
 .nav-brand-name::before {
-  content: "K";
+  content: none;
 }
 
 .nav-links a,
@@ -821,16 +831,29 @@ h1 span,
 }
 
 .phone-screen::before {
-  content: "";
-  width: 64px;
-  height: 64px;
-  margin-bottom: 10px;
+  display: none;
+  content: none;
+}
+
+.arion-logo-box {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 12px;
   border: 1px solid rgba(79, 140, 255, 0.34);
   border-radius: 18px;
   background:
     linear-gradient(135deg, rgba(79, 140, 255, 0.38), rgba(22, 211, 154, 0.24)),
     rgba(255, 255, 255, 0.04);
   box-shadow: 0 0 34px rgba(79, 140, 255, 0.24);
+}
+
+.arion-logo-box img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(50, 200, 255, 0.5));
 }
 
 .product-info {
