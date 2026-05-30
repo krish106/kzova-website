@@ -199,7 +199,7 @@ main,
   width: min(30vw, 280px);
   aspect-ratio: 1;
   transform: translateY(-50%);
-  background: url("/logo1.png") center / contain no-repeat;
+  background: none;
   opacity: 0.32;
   pointer-events: none;
 }
@@ -579,5 +579,318 @@ a {
     width: min(100%, 302px);
     max-width: 302px;
     box-sizing: border-box;
+  }
+}
+
+/* Dark revision: keep the site brand-led and remove old app logo artwork. */
+:root {
+  --primary: #4f8cff;
+  --secondary: #16d39a;
+  --accent: #ff7a5f;
+  --green: #16d39a;
+  --cyan: #32c8ff;
+  --purple: #8f7cff;
+  --bg: #06111f;
+  --bg2: #0a1728;
+  --card: rgba(10, 22, 38, 0.78);
+  --border: rgba(148, 163, 184, 0.16);
+  --border-glow: rgba(79, 140, 255, 0.28);
+  --text: #f7fbff;
+  --muted: #a4b2c7;
+  --grad1: linear-gradient(135deg, #4f8cff, #16d39a);
+  --grad2: linear-gradient(135deg, #8f7cff, #4f8cff);
+  --grad3: linear-gradient(135deg, #16d39a, #ff7a5f);
+}
+
+html {
+  background: #06111f;
+  color-scheme: dark;
+}
+
+body {
+  color: var(--text);
+  background:
+    linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 18% 8%, rgba(79, 140, 255, 0.2), transparent 34%),
+    radial-gradient(circle at 84% 0%, rgba(22, 211, 154, 0.13), transparent 30%),
+    linear-gradient(180deg, #071426 0%, #06111f 44%, #081625 100%);
+  background-size: 46px 46px, 46px 46px, auto, auto, auto;
+}
+
+body::before {
+  background: linear-gradient(120deg, rgba(255, 122, 95, 0.08), transparent 36%, rgba(50, 200, 255, 0.08));
+}
+
+#preloader {
+  background: #06111f;
+}
+
+.pre-logo-img,
+.nav-logo-img,
+.about-logo-img,
+.phone-screen .shield-icon {
+  display: none !important;
+}
+
+#nav {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: rgba(6, 17, 31, 0.82);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.26);
+}
+
+#nav.scrolled {
+  background: rgba(6, 17, 31, 0.94);
+  border-bottom-color: rgba(79, 140, 255, 0.22);
+}
+
+.nav-brand {
+  gap: 0;
+  padding-left: 0;
+}
+
+.nav-brand-name {
+  color: #f7fbff;
+}
+
+.nav-brand-name::before {
+  content: "K";
+}
+
+.nav-links a,
+.mobile-menu a {
+  color: #a4b2c7;
+}
+
+.nav-links a:hover,
+.nav-links a.active,
+.mobile-menu a:hover,
+.mobile-menu a.active {
+  color: #f7fbff;
+  background: rgba(79, 140, 255, 0.14);
+}
+
+.nav-hamburger span {
+  background: #f7fbff;
+}
+
+.mobile-menu {
+  background: rgba(6, 17, 31, 0.97);
+  border-color: rgba(148, 163, 184, 0.16);
+}
+
+.hero-content {
+  border-color: rgba(148, 163, 184, 0.16);
+  background:
+    linear-gradient(135deg, rgba(12, 27, 47, 0.96), rgba(7, 18, 33, 0.9)),
+    rgba(7, 18, 33, 0.92);
+  box-shadow: 0 34px 82px rgba(0, 0, 0, 0.34);
+}
+
+.hero-content::after {
+  display: none !important;
+  background: none !important;
+}
+
+.hero-h1,
+.section-h,
+.product-info h2,
+.about-text h2,
+h1 {
+  color: #f7fbff;
+}
+
+.hero-h1 .word-white {
+  color: #f7fbff;
+}
+
+.hero-h1 .word-gradient,
+.section-h span,
+.product-info h2 span,
+.about-text h2 span,
+h1 span,
+.stat-num {
+  background: linear-gradient(135deg, #4f8cff 0%, #16d39a 58%, #ff7a5f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-p,
+.section-p,
+.about-text p,
+.product-info p,
+.feature-card p,
+.privacy-item p,
+.tech-card p,
+.repo-card p,
+.footer-brand p,
+.last-updated,
+.policy-section p,
+.policy-section ul,
+.pre-text {
+  color: #a4b2c7;
+}
+
+.hero-tag,
+.section-tag,
+.header-tag,
+.product-badge {
+  color: #c4d7ff;
+  background: rgba(79, 140, 255, 0.12);
+  border-color: rgba(79, 140, 255, 0.24);
+}
+
+.btn-grad,
+.dl-btn.android {
+  background: linear-gradient(135deg, #4f8cff, #16d39a);
+  color: #ffffff;
+  box-shadow: 0 16px 34px rgba(79, 140, 255, 0.24);
+}
+
+.btn-outline,
+.dl-btn.windows {
+  color: #f7fbff;
+  border-color: rgba(148, 163, 184, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-outline:hover,
+.dl-btn.windows:hover {
+  background: rgba(79, 140, 255, 0.14);
+  border-color: rgba(79, 140, 255, 0.32);
+}
+
+.feature-card,
+.privacy-item,
+.tech-card,
+.repo-card,
+.policy-section,
+.contact-wrap,
+.about-3d-card,
+.phone-mockup,
+.mini-stat,
+.af-item {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: rgba(10, 22, 38, 0.78);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.26);
+}
+
+.feature-card:hover,
+.privacy-item:hover,
+.tech-card:hover,
+.repo-card:hover,
+.af-item:hover {
+  border-color: rgba(79, 140, 255, 0.34);
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.34);
+}
+
+#stats-belt,
+#footer {
+  background: #050b14;
+}
+
+.about-3d-card {
+  background:
+    linear-gradient(160deg, rgba(79, 140, 255, 0.12), rgba(22, 211, 154, 0.08)),
+    rgba(10, 22, 38, 0.8);
+}
+
+.about-3d-inner::before {
+  content: "K";
+  display: inline-grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(79, 140, 255, 0.34);
+  border-radius: 8px;
+  color: #f7fbff;
+  background: linear-gradient(135deg, rgba(79, 140, 255, 0.22), rgba(22, 211, 154, 0.16));
+  font: 800 34px/1 "Space Grotesk", "Inter", system-ui, sans-serif;
+}
+
+.phone-mockup {
+  background: rgba(10, 22, 38, 0.78);
+}
+
+.phone-screen {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(79, 140, 255, 0.2), transparent 35%),
+    #050b14;
+}
+
+.phone-screen::before {
+  content: "";
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(79, 140, 255, 0.34);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(79, 140, 255, 0.38), rgba(22, 211, 154, 0.24)),
+    rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 34px rgba(79, 140, 255, 0.24);
+}
+
+.product-info {
+  max-width: 620px;
+}
+
+.product-info p {
+  max-width: 620px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  border-color: rgba(148, 163, 184, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f7fbff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #79889f;
+}
+
+.content-wrapper {
+  color: #f7fbff;
+}
+
+a {
+  color: #7aa7ff;
+}
+
+@media (max-width: 560px) {
+  .hero-content {
+    padding-bottom: 34px;
+  }
+
+  .product-wrap,
+  .product-hero,
+  .product-info {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .product-info {
+    padding: 0;
+  }
+
+  .product-info p,
+  .section-p {
+    width: min(100%, 300px);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  .download-btns {
+    width: 100%;
+    align-items: center;
   }
 }

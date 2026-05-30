@@ -2,7 +2,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-const logos = ['logo1.png', 'klogo.png'];
+const logos = ['klogo.png'];
 
 async function optimizeLogos() {
   for (const logo of logos) {
