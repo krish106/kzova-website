@@ -22,6 +22,6 @@ if (contactForm) {
     const message = encodeURIComponent(data.get("message") || "");
     const subject = encodeURIComponent("Kzova Labs support request");
     const body = `Name: ${name}%0AEmail: ${email}%0A%0A${message}`;
-    window.location.href = `mailto:contact@kzovalabs.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:arionvpn1@gmail.com?subject=${subject}&body=${body}`;
   });
 }
